@@ -35,7 +35,9 @@ int main(int argc, char * argv[]){
     std::cout << argv[1] << std::endl;
     
     std::ifstream infile(argv[1]);
-    auto t = parse<Task>(infile);
+    std::vector<Task> tasks = parse<Task>(infile);
+    //tasks[0].print();
+    tasks[1].print();
 
-
+    auto solution = tasks[1].solve_bruteforce();
 }

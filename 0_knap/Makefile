@@ -1,6 +1,9 @@
 
 files=main.cc task.cc
 
+valgrind:
+	g++ -std=c++11 -g -pedantic -Wall -Wextra -O2 -o main_O2.out ${files} && valgrind ./main_O2.out data/knap_4.inst.dat
+
 O2:
 	g++ -std=c++11 -g -pedantic -Wall -Wextra -O2 -o main_O2.out ${files} && ./main_O2.out data/knap.inst.dat
 
