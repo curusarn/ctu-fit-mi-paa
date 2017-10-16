@@ -9,28 +9,28 @@ public:
 };
 
 class Item {
-    double price_per_weight = -1;
+    mutable double price_per_weight = -1;
 
 public:
     const int price;
     const int weight;
 
     Item(int p, int w) : price(p), weight(w) {};
-    double get_price_per_weight();
+    double get_price_per_weight() const;
+    bool operator<(const Item & it) const;
 };
 
 class Solution {
     uint id;
-    int capacity;
     int total_price;
     std::vector<bool> bitset;
 
 public:
     Solution(const std::string & line);
-    Solution(uint i, int c, int tp, std::vector<bool> sol) : 
-        id(i), capacity(c), total_price(tp), bitset(sol) {}
+    Solution(uint i, int tp, std::vector<bool> sol) : 
+        id(i), total_price(tp), bitset(sol) {}
     Solution(const Solution & sol) : 
-        id(sol.id), capacity(sol.capacity), total_price(sol.total_price),
+        id(sol.id), total_price(sol.total_price),
         bitset(sol.bitset) {};
 
     const std::vector<bool> & get_bitset() const { return bitset; };
@@ -38,6 +38,7 @@ public:
     bool operator==(const Solution & sol) const;
     int get_total_price() const { return total_price; };
     void set_total_price(int t) { total_price = t; };
+    void print();
 };
 
 class Task {
@@ -67,3 +68,5 @@ std::vector<T> parse(std::ifstream & infile) {
 
     return list;
 }
+
+bool test();

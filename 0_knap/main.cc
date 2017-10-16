@@ -27,17 +27,25 @@
 
 
 int main(int argc, char * argv[]){
-    if (argc < 2) {
+    if (argc < 3) {
         std::cout << "ERR: Not enough arguments" << std::endl;
         return 1;
     }
 
-    std::cout << argv[1] << std::endl;
+    //std::cout << argv[1] << std::endl;
     
     std::ifstream infile(argv[1]);
     std::vector<Task> tasks = parse<Task>(infile);
-    //tasks[0].print();
-    tasks[1].print();
+    std::ifstream infile2(argv[2]);
+    std::vector<Solution> solutions = parse<Solution>(infile2);
+    tasks[0].print();
+    //tasks[1].print();
+    
+    //test();
 
-    auto solution = tasks[1].solve_bruteforce();
+    auto solution0 = tasks[0].solve_bruteforce();
+    //auto solution1 = tasks[1].solve_bruteforce();
+    //solution0.print();
+    solutions[0].print();
+
 }
