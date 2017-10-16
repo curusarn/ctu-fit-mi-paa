@@ -12,12 +12,13 @@ class Item {
     mutable double price_per_weight = -1;
 
 public:
-    const int price;
-    const int weight;
+    int price;
+    int weight;
 
     Item(int p, int w) : price(p), weight(w) {};
     double get_price_per_weight() const;
     bool operator<(const Item & it) const;
+    Item& operator=(const Item& it); 
 };
 
 class Solution {
@@ -51,8 +52,7 @@ public:
     Task(const Task & task) : id(task.id), capacity(task.capacity),
                               items(task.items) {};
     Solution solve_bruteforce();
-    Solution solve_heuristic();
-    bool validate(Solution & sol);
+    int solve_heuristic();
     void print();
 };
 

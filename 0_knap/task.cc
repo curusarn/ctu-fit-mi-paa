@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 #include "task.h"
 
 // O*(n)
@@ -28,6 +29,13 @@ double Item::get_price_per_weight() const {
 
 bool Item::operator<(const Item & it) const {
     return get_price_per_weight() < it.get_price_per_weight();
+}
+
+Item& Item::operator=(const Item & it) {
+    price = it.price;
+    weight = it.weight;
+    price_per_weight = it.price_per_weight;
+    return *this;
 }
 
 Solution::Solution(const std::string & line) {
@@ -62,15 +70,16 @@ Task::Task(const std::string & line) {
 
 Solution Task::solve_bruteforce() {
     std::vector<bool> curr_bitset(items.size(), false); 
-    
+     
     std::vector<bool> best_bitset;
     best_bitset = curr_bitset;
-    int best_price = 0, best_weight = 0;
+    int best_price = 0;
 
     uint i = 0, x;
     int curr_price = 0, curr_weight = 0;
     while (true) {
-        x = get_first_zero_bit(i);
+        x = get_first_bruteforcezero_bit(i);
+
         std::cout << "i: " << i << " x: " << x << std::endl;
         if (x >= items.size()) // Hamiltonian path reached non-existing element
             return Solution(id, best_price, best_bitset);  
@@ -83,40 +92,28 @@ Solution Task::solve_bruteforce() {
         if (curr_weight <= capacity && curr_price > best_price) {
             best_bitset = curr_bitset;
             best_price = curr_price;
-            best_weight = curr_weight;
         }
 
         i++;
     }
 }
 
-bool Task::cpm_items_idx(uint a, uint b) {
-    return items[a] < items[b];
-}
 
-Solution Task::solve_heuristic() {
-    std::vector<uint> items_idx;
-    items_idx.reserve(items.size());
-    for (uint i = 0; i < items.size(); i++)
-        items_idx[i] = i;
-
-    std::sort(sorted_items.begin(), sorted_items.end(), cmp_items_idx);
+int Task::solve_heuristic() {
+    std::sort(items.begin(), items.end());
      
-    std::vector<bool> curr_bitset(items.size(), false); 
-
     uint i = items.size() - 1;
     int curr_price = 0, curr_weight = 0;
     while (true) {
-        uint idx = item_idx[i];
-        Item & item = items[idx];
+        Item & item = items[i];
         if (curr_weight + item.weight > capacity)
-            return Solution(id, curr_price, bitset);
+            return curr_price;
 
         curr_price += item.price;
         curr_weight += item.weight;
-        curr_bitset[idx] = true;
+        i--;
     }
-    return Solution(id, curr_price, curr_bitset);
+    return curr_price;
 }
 
 void Solution::print() {

@@ -44,7 +44,7 @@ int main(int argc, char * argv[]){
     //test();
 
     auto solution0 = tasks[0].solve_bruteforce();
-    //auto solution1 = tasks[1].solve_bruteforce();
+    std::cout << "t0: " << tasks[0].solve_heuristic() << std::endl;
     //solution0.print();
     solutions[0].print();
 
