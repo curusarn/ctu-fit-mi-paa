@@ -1,51 +1,55 @@
+
 #include <iostream>
 #include <vector>
+#include <cassert>
 #include "task.h" 
+#include "record_collector.h" 
+
 
 #define uint unsigned int
 
+const char* DATA_PATH = "data/";
 
-//std::vector<std::string> get_tasks(std::string data_dir){
-//    std::vector<std::string> tasks;
-//    dir = opendir(data_dir);
-//    while ((ent = readdir(dir)) != NULL) {
-//        const std::string file_name = ent->d_name;
-//        const std::string full_file_name = directory + "/" + file_name;
-//
-//        if (file_name[0] == '.')
-//            continue;
-//
-//        const std::string &  = file_name.substr(file_name.length() - 4)
-//
-//         
-//
-//        
-//        
-//
-//}
+std::string instance_path(uint problem_category) {
+    return std::string(DATA_PATH) + "knap_" +
+           std::to_string(problem_category) + ".inst.dat";
+}
 
-
+std::string solution_path(uint problem_category) {
+    return std::string(DATA_PATH) + "knap_" +
+           std::to_string(problem_category) + ".sol.dat";
+}
 
 int main(int argc, char * argv[]){
-    if (argc < 3) {
+    if (argc < 2) {
         std::cout << "ERR: Not enough arguments" << std::endl;
         return 1;
     }
 
-    //std::cout << argv[1] << std::endl;
-    
-    std::ifstream infile(argv[1]);
-    std::vector<Task> tasks = parse<Task>(infile);
-    std::ifstream infile2(argv[2]);
-    std::vector<Solution> solutions = parse<Solution>(infile2);
-    tasks[0].print();
-    //tasks[1].print();
-    
-    //test();
+    std::cout << "problem_category he_relative_miss avg_bf_time avg_he_time"  << std::endl;
+    for (int i = 1; i < argc; i++) {
+        int problem_category = std::stoi(argv[i]);
 
-    auto solution0 = tasks[0].solve_bruteforce();
-    std::cout << "t0: " << tasks[0].solve_heuristic() << std::endl;
-    //solution0.print();
-    solutions[0].print();
+        std::ifstream infile_inst(instance_path(problem_category));
+        std::vector<Task> tasks = parse<Task>(infile_inst);
+        std::ifstream infile_sol(solution_path(problem_category));
+        std::vector<Solution> solutions = parse<Solution>(infile_sol);
+        
+        assert(tasks.size() == solutions.size());
 
+        RecordCollector collector(problem_category);
+
+        for (uint j = 0; j < tasks.size(); j++) {
+            double ref = solutions[j].get_total_price();
+
+            auto bf = tasks[j].time_bruteforce();
+            auto he = tasks[j].time_heuristic();
+            
+            collector.add_record(ref, bf.first, bf.second, he.first, he.second);
+        }
+
+        collector.print_result(std::cout);
+    }
+
+    return 0;
 }

@@ -1,61 +1,39 @@
 
+#include <ctime>
 #include <vector>
 #include <fstream>
+#include <functional>
+#include "item_solution.h"
 #define uint unsigned int
 
-class NoSolutionException : std::exception {
-public:
-    const char * what() { return "No solution found."; }; 
-};
 
-class Item {
-    mutable double price_per_weight = -1;
+typedef std::function<int()> Solve_call;
 
-public:
-    int price;
-    int weight;
-
-    Item(int p, int w) : price(p), weight(w) {};
-    double get_price_per_weight() const;
-    bool operator<(const Item & it) const;
-    Item& operator=(const Item& it); 
-};
-
-class Solution {
-    uint id;
-    int total_price;
-    std::vector<bool> bitset;
-
-public:
-    Solution(const std::string & line);
-    Solution(uint i, int tp, std::vector<bool> sol) : 
-        id(i), total_price(tp), bitset(sol) {}
-    Solution(const Solution & sol) : 
-        id(sol.id), total_price(sol.total_price),
-        bitset(sol.bitset) {};
-
-    const std::vector<bool> & get_bitset() const { return bitset; };
-    std::vector<bool> & get_bitset() { return bitset; };
-    bool operator==(const Solution & sol) const;
-    int get_total_price() const { return total_price; };
-    void set_total_price(int t) { total_price = t; };
-    void print();
-};
-
+class Task;
 class Task {
     uint id;
     int capacity;
     std::vector<Item> items;
 
+    static int add_or_delete(uint id, std::vector<bool> & bitset);
 public:
     Task(const std::string & line);
     Task(const Task & task) : id(task.id), capacity(task.capacity),
                               items(task.items) {};
-    Solution solve_bruteforce();
-    int solve_heuristic();
+    static uint get_first_zero_bit(uint bits); 
     void print();
-};
 
+    int solve_bruteforce();
+    int solve_heuristic();
+
+    std::pair<int, double> time_call(Solve_call call);
+
+    std::pair<int, double> time_bruteforce() { 
+        return time_call(std::bind(&Task::solve_bruteforce, this)); };
+    std::pair<int, double> time_heuristic() { 
+        return time_call(std::bind(&Task::solve_heuristic, this)); };
+
+};
 
 template <typename T>
 std::vector<T> parse(std::ifstream & infile) {
