@@ -14,3 +14,6 @@ O3:
 
 Ofast:
 	g++ -std=c++11 -g -pedantic -Wall -Wextra -Ofast -o main.out ${files} && ${command}
+
+plot:
+	gnuplot -c src/relative_miss.gp 
