@@ -26,7 +26,8 @@ int main(int argc, char * argv[]){
         return 1;
     }
 
-    std::cout << "problem_category he_relative_miss avg_bf_time avg_he_time"  << std::endl;
+    std::cout << "problem_category he_relative_miss avg_bf_time avg_he_time"
+        " max_he_relative_miss max_bf_time max_he_time" << std::endl;
     for (int i = 1; i < argc; i++) {
         int problem_category = std::stoi(argv[i]);
 

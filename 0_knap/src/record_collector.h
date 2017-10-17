@@ -9,6 +9,10 @@ class RecordCollector {
     double bruteforce_time = 0;
     double heuristic_time = 0;
     double heuristic_miss = 0;
+
+    double max_bruteforce_time = 0;
+    double max_heuristic_time = 0;
+    double max_heuristic_miss = 0;
     int count = 0;
     
     static double relative_miss(double optimal, double approx);
