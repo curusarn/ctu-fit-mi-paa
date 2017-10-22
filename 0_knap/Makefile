@@ -17,3 +17,18 @@ Ofast:
 
 plot:
 	gnuplot -c src/plots.gp 
+
+pdf: plot
+	grip REPORT.md localhost:6420 --title="MI-PAA - Knapsack problem" &
+	sleep 10
+	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-0_knap.pdf
+	pkill grip
+
+tar:
+	tar -cvf letsimon-fit-cvut-mi-ppa-0_knap.tar *
+
+deps:
+	#Deps: gcc, gnuplot, tar, wkhtmltopdf, grip (from pip)
+
+clean:
+	-rm *.png *.pdf *.tar *.out
