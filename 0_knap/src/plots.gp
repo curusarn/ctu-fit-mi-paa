@@ -20,11 +20,11 @@
 # abbreviations
 
 set terminal png size 800,600 enhanced font "Arial,16"
-set termoption ps 1
+# set termoption ps 1
 set key box 1
 set grid
 
-set output 'miss_he.png'
+set output 'plots/miss_he.png'
 set title "Relative mistake - heuristic"
 set xlabel "Problem size"
 set ylabel "Relative mistake"
@@ -34,7 +34,7 @@ plot\
     'results.txt' using 1:2 title 'average' pt 7 lc rgb 'blue'
 
 
-set output 'time_bf.png'
+set output 'plots/time_bf.png'
 set title "CPU time - bruteforce"
 set ylabel "Time [CPU clock ticks]"
 set logscale y
@@ -43,14 +43,14 @@ plot\
     'results.txt' using 1:6 title 'maximal' pt 9 lc rgb 'red',\
     'results.txt' using 1:3 title 'average' pt 7 lc rgb 'blue'
 
-set output 'time_both.png'
+set output 'plots/time_both.png'
 set title "CPU time - comparison" 
 plot\
     'results.txt' using 1:3 title 'bruteforce average' pt 7 lc rgb 'green',\
     'results.txt' using 1:4 title 'heuristic average' pt 7 lc rgb 'black'
 
 unset logscale y
-set output 'time_he.png'
+set output 'plots/time_he.png'
 set title "CPU time - heuristic"
 plot\
     'results.txt' using 1:7 title 'maximal' pt 9 lc rgb 'red',\

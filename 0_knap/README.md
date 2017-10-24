@@ -41,10 +41,10 @@ I stop when the next item can't be added because of insufficient capacity.
 
 ## Performance measurements 
 
-![Relative mistake](miss_he.png)
-![CPU time - bruteforce](time_bf.png)
-![CPU time - heuristic](time_he.png)
-![CPU time - comparison](time_both.png)
+![Relative mistake](plots/miss_he.png)
+![CPU time - bruteforce](plots/time_bf.png)
+![CPU time - heuristic](plots/time_he.png)
+![CPU time - comparison](plots/time_both.png)
 
 
 ## Conclusion
