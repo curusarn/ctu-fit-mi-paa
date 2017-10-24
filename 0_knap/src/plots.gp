@@ -36,7 +36,7 @@ plot\
 
 set output 'plots/time_bf.png'
 set title "CPU time - bruteforce"
-set ylabel "Time [CPU clock ticks]"
+set ylabel "Time [seconds]"
 set logscale y
 set key left top
 plot\

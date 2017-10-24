@@ -6,7 +6,7 @@ The knapsack problem or rucksack problem is a problem in combinatorial optimizat
 
 Exact definition and instructions: https://edux.fit.cvut.cz/courses/MI-PAA/homeworks/01/start
 
-## Possible solutions (Incomplete list)
+## Possible solutions
 - Bruteforce
 - Simple heuristic
 - Branch & bound
@@ -60,7 +60,7 @@ Item that should be added or removed next is calculated in O\*(1).
 ### Heuristic
 Graph for Heuristic kind of looks like O(N) but it is actually **O(N\*logN)**.
 
-First we sort all the items in O(N\*logN).
+First we sort all the items in O(N\*logN).  
 Then we keep adding items until we run out of capacity - O(N).
 
 
