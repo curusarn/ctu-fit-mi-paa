@@ -50,7 +50,7 @@ I stop when the next item can't be added because of insufficient capacity.
 ## Conclusion
 
 ### Bruteforce
-Bruteforce runs in O(2^N) as we can clearly see in the plot.
+Bruteforce runs in O(2^N ) as we can clearly see in the plot.
 
 There are 2^n possible solutions that algorithm has to evaluate.
 There is a constant amount of operations that is performed for each solution.
