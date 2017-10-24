@@ -25,7 +25,7 @@ pdf: plot
 	pkill grip
 
 tar:
-	tar -cvf letsimon-fit-cvut-mi-ppa-0_knap.tar *
+	tar -zcvf letsimon-fit-cvut-mi-paa-0_knap.tar.gz src/* Makefile
 
 deps:
 	#Deps: gcc, gnuplot, tar, wkhtmltopdf, grip (from pip)
