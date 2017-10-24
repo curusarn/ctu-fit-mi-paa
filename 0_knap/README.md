@@ -15,21 +15,21 @@ Exact definition and instructions: https://edux.fit.cvut.cz/courses/MI-PAA/homew
 
 
 ## Solution overview
-I have implemented **bruteforce solution** and **solution that uses price per weight as heuristic**.
+I have implemented **bruteforce solution** and **heuristic solution that uses price per weight as heuristic criteria**.
 
 ### Bruteforce
 Brute-force search, is a very general problem-solving technique that consists of systematically enumerating all possible candidates for the solution and checking whether each candidate satisfies the problem's statement.<sup>[2]</sup>
 
 ### Heuristic 
-Heuristic, is any approach to problem solving, learning, or discovery that employs a practical method not guaranteed to be optimal or perfect, but sufficient for the immediate goals. Where finding an optimal solution is impossible or impractical, heuristic methods can be used to speed up the process of finding a satisfactory solution.<sup>[3]</sup>
+Heuristic approach, is any approach to problem solving, learning, or discovery that employs a practical method not guaranteed to be optimal or perfect, but sufficient for the immediate goals. Where finding an optimal solution is impossible or impractical, heuristic methods can be used to speed up the process of finding a satisfactory solution.<sup>[3]</sup>
 
-I'm using **price per weight** as heuristic.
+I'm using **price per weight** as criteria for heuristic.
 
 ## Algorithm description
 
 ### Bruteforce
 Imagine space of all possible solutions as a graph where nodes are solutions and there is an edge between solutions that only differ in one bit (one item is missing or one extra item is present).  
-I'm using Hamiltonian path<sup>[4]</sup> to traverse all solutions in such a way that only one item is either added or removed from knapsack in each step.  
+I'm using Hamiltonian path<sup>[4]</sup> to iterate trough all solutions in such a way that only one item is either added or removed from knapsack in each step.  
 I'm incrementing a counter in each step and I'm using bitwise representation of this counter to calculate next item to add or remove.  
 
 
@@ -50,14 +50,14 @@ I stop when the next item can't be added because of insufficient capacity.
 ## Conclusion
 
 ### Bruteforce
-Bruteforce runs in O(2^N ) as we can clearly see in the plot.
+Bruteforce runs in **O(2^N )** as we can clearly see in the plot.
 
-There are 2^N possible solutions that algorithm has to evaluate.
-There is a constant amount of operations that is performed for each solution.
+There are 2^N possible solutions that algorithm has to evaluate.  
+There is a constant amount of operations that is performed for each solution.  
 Item that should be added or removed next is calculated in O\*(1).
 
 ### Heuristic
-Graph for Heuristic kind of looks like O(N) but it is actually O(N\*logN).
+Graph for Heuristic kind of looks like O(N) but it is actually **O(N\*logN)**.
 
 First we sort all the items in O(N\*logN).
 Then we try to add all the items in O(N).
