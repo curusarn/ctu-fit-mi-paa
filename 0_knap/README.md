@@ -23,7 +23,7 @@ Brute-force search, is a very general problem-solving technique that consists of
 ### Heuristic 
 Heuristic approach, is any approach to problem solving, learning, or discovery that employs a practical method not guaranteed to be optimal or perfect, but sufficient for the immediate goals. Where finding an optimal solution is impossible or impractical, heuristic methods can be used to speed up the process of finding a satisfactory solution.<sup>[3]</sup>
 
-I'm using **price per weight** as criteria for heuristic.
+I'm using **price per weight** as criteria for heuristic method.
 
 ## Algorithm description
 
@@ -50,11 +50,12 @@ I stop when the next item can't be added because of insufficient capacity.
 ## Conclusion
 
 ### Bruteforce
-Bruteforce runs in **O(2^N )** as we can clearly see in the plot.
+Bruteforce runs in **O(2^N )** as we can see in the plot.
 
-There are 2^N possible solutions that algorithm has to evaluate.  
+The algorithm has to evaluate 2^N possible solutions.  
 There is a constant amount of operations that is performed for each solution.  
 Item that should be added or removed next is calculated in O\*(1).
+
 
 ### Heuristic
 Graph for Heuristic kind of looks like O(N) but it is actually **O(N\*logN)**.
