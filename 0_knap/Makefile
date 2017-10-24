@@ -19,7 +19,7 @@ plot:
 	gnuplot -c src/plots.gp 
 
 pdf: plot
-	grip REPORT.md localhost:6420 --title="MI-PAA - Knapsack problem" &
+	grip README.md localhost:6420 --title="MI-PAA - Knapsack problem" &
 	sleep 10
 	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-0_knap.pdf
 	pkill grip

@@ -60,7 +60,7 @@ Item that should be added or removed next is calculated in O\*(1).
 Graph for Heuristic kind of looks like O(N) but it is actually **O(N\*logN)**.
 
 First we sort all the items in O(N\*logN).
-Then we try to add all the items in O(N).
+Then we keep adding items until we run out of capacity - O(N).
 
 
 ## Source code
