@@ -20,7 +20,7 @@ public:
     Task(const std::string & line);
     Task(const Task & task) : id(task.id), capacity(task.capacity),
                               items(task.items) {};
-    static uint get_first_zero_bit(uint bits); 
+    static uint get_first_zero_bit(uint64_t bits); 
     void print();
 
     int solve_bruteforce();

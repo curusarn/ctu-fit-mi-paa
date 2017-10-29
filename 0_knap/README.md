@@ -46,6 +46,7 @@ I stop when the next item can't be added because of insufficient capacity.
 ![CPU time - heuristic](plots/time_he.png)
 ![CPU time - comparison](plots/time_both.png)
 
+*Measured using Intel Pentium G4560 @ 3.5 GHz*
 
 ## Conclusion
 

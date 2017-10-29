@@ -22,6 +22,7 @@ void RecordCollector::add_record(int ref_price,
     if (he_miss > max_heuristic_miss) max_heuristic_miss = he_miss;
     if (bf_time > max_bruteforce_time) max_bruteforce_time = bf_time;
     if (he_time > max_heuristic_time) max_heuristic_time = he_time;
+    //std::cerr << problem_category << " progress: " << count << " / ?50?" << std::endl;
 }
 
 void RecordCollector::print_result(std::ostream & os) {

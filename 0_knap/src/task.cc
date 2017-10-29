@@ -19,8 +19,8 @@ Task::Task(const std::string & line) {
 }
 
 // O*(1)
-uint Task::get_first_zero_bit(uint bits){
-    uint mask = 1;
+uint Task::get_first_zero_bit(uint64_t bits){
+    uint64_t mask = 1;
     uint index = 0;
     while ((bits & mask) != 0) {
         mask = (mask<<1);
@@ -41,11 +41,13 @@ int Task::solve_bruteforce() {
     best_bitset = curr_bitset;
     int best_price = 0;
 
-    uint i = 0, x;
+    uint64_t i = 0;
+    uint x;
     int curr_price = 0, curr_weight = 0;
     while (true) {
         x = get_first_zero_bit(i);
 
+        //if (x > 30) std::cerr << "  >>> progress: " << x << " / ~" << items.size() << std::endl;
         //std::cout << "i: " << i << " x: " << x << std::endl;
         if (x >= items.size()) // Hamiltonian path reached non-existing element
             return best_price;  

@@ -9,6 +9,7 @@
 #define uint unsigned int
 
 const char* DATA_PATH = "data/";
+const int BF_LIMIT = 24;
 
 std::string instance_path(uint problem_category) {
     return std::string(DATA_PATH) + "knap_" +
@@ -43,8 +44,11 @@ int main(int argc, char * argv[]){
         for (uint j = 0; j < tasks.size(); j++) {
             double ref = solutions[j].get_total_price();
 
-            auto bf = tasks[j].time_bruteforce();
             auto he = tasks[j].time_heuristic();
+            std::pair<int, double> bf 
+                = (problem_category < BF_LIMIT) 
+                ? tasks[j].time_bruteforce() 
+                : std::pair<int, double>(ref, -0.9);
             
             collector.add_record(ref, bf.first, bf.second, he.first, he.second);
         }
