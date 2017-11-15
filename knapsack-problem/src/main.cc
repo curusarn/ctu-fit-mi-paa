@@ -9,7 +9,7 @@
 #define uint unsigned int
 
 const char* DATA_PATH = "data/";
-const int BF_LIMIT = 24;
+const int BF_LIMIT = 26;
 
 std::string instance_path(uint problem_category) {
     return std::string(DATA_PATH) + "knap_" +

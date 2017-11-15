@@ -4,6 +4,9 @@
 #include <algorithm>
 #include "task.h"
 
+#define MIN_ALLOWED_TIME 0.00001
+// CLOCKS_PER_SEC is about 1 * 10^(6)
+// so I allow minimal time of about 10^(-5) 
 
 Task::Task(const std::string & line) {
     std::istringstream iss(line);
@@ -36,7 +39,7 @@ int Task::add_or_delete(uint id, std::vector<bool> & bitset) {
 
 int Task::solve_bruteforce() {
     std::vector<bool> curr_bitset(items.size(), false); 
-     
+
     std::vector<bool> best_bitset;
     best_bitset = curr_bitset;
     int best_price = 0;
@@ -86,13 +89,28 @@ int Task::solve_heuristic() {
 
 
 std::pair<int, double> Task::time_call(Solve_call call) {
-  //using namespace std;
-  std::clock_t begin = std::clock();
+    //using namespace std;
+    std::clock_t begin = std::clock();
 
-  int result = call();
+    int result = call();
 
-  std::clock_t end = std::clock();
-  return std::make_pair(result, double(end - begin) / CLOCKS_PER_SEC);
+    std::clock_t end = std::clock();
+
+    double time = double(end - begin) / CLOCKS_PER_SEC;
+
+    int number_of_runs = 1;
+    while (time < MIN_ALLOWED_TIME) {
+        // run call() multiple times and count the average running time
+        //      until you get something larget than MIN_ALLOWED_TIME
+        number_of_runs *= 16;
+        begin = std::clock();
+        for(int i = 0; i < number_of_runs; i++)
+            call();
+        end = std::clock();
+        time = double(end - begin) / CLOCKS_PER_SEC;
+    }
+
+    return std::make_pair(result, time / number_of_runs);
 }
 
 
