@@ -8,6 +8,7 @@
 
 #define uint unsigned int
 
+
 const char* DATA_PATH = "data/";
 const int BF_LIMIT = 26;
 
@@ -27,8 +28,8 @@ int main(int argc, char * argv[]){
         return 1;
     }
 
-    std::cout << "problem_category he_relative_miss avg_bf_time avg_he_time"
-        " max_he_relative_miss max_bf_time max_he_time" << std::endl;
+    std::cout << "problem_category (miss time max_miss max_time) "
+              << " * (bruteforce branchbound heuristic)" << std::endl;
     for (int i = 1; i < argc; i++) {
         int problem_category = std::stoi(argv[i]);
 
@@ -39,18 +40,24 @@ int main(int argc, char * argv[]){
         
         assert(tasks.size() == solutions.size());
 
-        RecordCollector collector(problem_category);
+        RecordCollector collector(problem_category, 3);
 
         for (uint j = 0; j < tasks.size(); j++) {
-            double ref = solutions[j].get_total_price();
+            std::vector<std::pair<int,double>> record;
 
-            auto he = tasks[j].time_heuristic();
-            std::pair<int, double> bf 
-                = (problem_category < BF_LIMIT) 
-                ? tasks[j].time_bruteforce() 
-                : std::pair<int, double>(ref, -0.9);
+            int ref = solutions[j].get_total_price();
+
+            record.emplace_back((problem_category < BF_LIMIT) 
+                                ? tasks[j].time_bruteforce() 
+                                : std::pair<int, double>(ref, -42));
+
+            record.emplace_back((problem_category < BF_LIMIT) 
+                                ? tasks[j].time_branch_and_bound() 
+                                : std::pair<int, double>(ref, -42));
+
+            record.emplace_back(tasks[j].time_heuristic());
             
-            collector.add_record(ref, bf.first, bf.second, he.first, he.second);
+            collector.add_record(ref, record);
         }
 
         collector.print_result(std::cout);

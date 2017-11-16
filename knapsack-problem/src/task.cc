@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include <algorithm>
+#include <cassert>
 #include "task.h"
 
 #define MIN_ALLOWED_TIME 0.00001
@@ -71,8 +72,13 @@ int Task::solve_bruteforce() {
 
 
 int Task::solve_heuristic() {
-    std::sort(items.begin(), items.end());
+    // sort by price_per_weight
+    std::sort(items.begin(), items.end(),
+          [](const Item & a, const Item & b){
+                return a.get_price_per_weight() < b.get_price_per_weight(); });
      
+    assert( items[0].get_price_per_weight() <= items[1].get_price_per_weight() );
+
     uint i = items.size() - 1;
     int curr_price = 0, curr_weight = 0;
     while (true) {
@@ -85,6 +91,55 @@ int Task::solve_heuristic() {
         i--;
     }
     return curr_price;
+}
+
+int Task::_solve_branch_and_bound(const std::vector<int> & price_sums,
+                                  int & best_price,
+                                  int curr_price, int curr_weigth,
+                                  uint item_idx) {
+    
+    if (item_idx == items.size())
+        return curr_weigth; // end of recursion - no more items
+      
+    if (curr_weigth > capacity)
+        return 0; // cut branches that exceed capacity
+
+    if (curr_price + price_sums[item_idx] <= best_price)
+        return 0; // cut branches that won't give better solution 
+
+    int res1 = _solve_branch_and_bound(price_sums, best_price,
+                                       curr_price + items[item_idx].price,
+                                       curr_weigth + items[item_idx].weight,
+                                       item_idx + 1);
+
+    best_price = std::max(best_price, res1);
+    
+    int res0 = _solve_branch_and_bound(price_sums, best_price,
+                                       curr_price, curr_weigth,
+                                       item_idx + 1);
+
+    best_price = std::max(best_price, res0);
+
+    return best_price;
+}
+
+int Task::solve_branch_and_bound() {
+    // sort by weight (desc)
+    std::sort(items.begin(), items.end(),
+          [](const Item & a, const Item & b){ return a.price > b.price; });
+
+    assert( items[0].price >= items[1].price );
+
+    // each member is 
+    //      sum of item with same index and all following items
+    std::vector<int> price_sums(items.size());
+
+    price_sums[items.size()-1] = items[items.size()-1].price;
+    for (int i = static_cast<int>(items.size()-2); i >= 0; i--) 
+        price_sums[i] = price_sums[i+1] + items[i].price; 
+
+    int b = 0;
+    return _solve_branch_and_bound(price_sums, b, 0, 0, 0);
 }
 
 
@@ -114,18 +169,9 @@ std::pair<int, double> Task::time_call(Solve_call call) {
 }
 
 
-
 void Task::print() {
     std::cout << "ID: " << id << std::endl << "cap: " << capacity << std::endl;
     for (uint i = 0; i < items.size(); i++) 
         std::cout << items[i].price << " / " << items[i].weight << std::endl;
     std::cout << std::endl;
-}
-
-bool test() {
-    std::cout << "get_first_zero_bit()" << std::endl;    
-    for (uint i = 0; i < 17; i++)
-        std::cout << i << " -> " << Task::get_first_zero_bit(i) << std::endl; 
-
-    return true;
 }
