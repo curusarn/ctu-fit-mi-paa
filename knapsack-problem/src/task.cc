@@ -198,20 +198,30 @@ int Task::solve_dynamic_programming_by_price() {
     return max_price;
 }
 
-int Task::solve_fptas(int precision) {
+int Task::solve_fptas(double epsilon) {
     // sort by price
     std::sort(items.begin(), items.end(),
           [](const Item & a, const Item & b){ return a.price < b.price; });
      
     assert( items[0].price <= items[1].price );
 
+    double scale = epsilon * items[items.size() - 1].price / items.size();
+
+    std::vector<int> scaled_prices;
+    scaled_prices.reserve(items.size());
+
+    for (uint i = 0; i < items.size(); i++)
+        scaled_prices.push_back(items[i].price / scale);
+
+    assert( items.size() == scaled_prices.size() );
+
     // 2d array with first row prefilled with zeros
     std::vector<std::vector<int>> weights(items.size(), std::vector<int>(1, 0));
 
     int price_sum = 0; // of prices
     for (uint i = 0; i < items.size(); i++) {
-        price_sum += items[i].price;
-        weights[i].reserve(items[items.size() - 1].price);
+        price_sum += scaled_prices[i];
+        weights[i].reserve(scaled_prices[items.size() - 1]);
     }
     assert(price_sum != 0);
 
@@ -221,25 +231,34 @@ int Task::solve_fptas(int precision) {
         for (int i = 0; i < static_cast<int>(items.size()); i++) {
             int do_nothing = get_safe_weight( weights, i-1, p );
             //std::cout << do_nothing << std::endl;
-            int add_item = get_safe_weight( weights, i-1, p - items[i].price )
+            int add_item = get_safe_weight( weights, i-1, p - scaled_prices[i] )
                             + items[i].weight;
             //std::cout << add_item << std::endl;
             int min = std::min(do_nothing, add_item);
             //std::cout << min << std::endl;
             weights[i].push_back(min);
 
-            //std::cout << p - items[i].price << " | " << items[i].weight << std::endl;
-
 
             if (weights[i][p] <= capacity)
                 max_price = p;
         }
-        if (p - items[items.size() - 1].price > max_price || p > price_sum)
+        if (p - scaled_prices[items.size() - 1] > max_price || p > price_sum)
             break; // all partial solutions are over capacity
                    //   no possible better solution
         p++;
     }
      
+    // get result from table
+    p = max_price;
+    max_price = 0;
+    for (int i = static_cast<int>(items.size()-1); i >= 0; i--) {
+        if (get_safe_weight(weights, i, p) != get_safe_weight(weights, i-1, p)) {
+            // item is present in knapsack
+            max_price += items[i].price; // add original price
+            p -= scaled_prices[i]; // step down N rows (N = scaled_price
+        }
+    }
+
     return max_price;
 }
 

@@ -30,7 +30,8 @@ int main(int argc, char * argv[]){
     }
 
     std::cout << "problem_category (miss time max_miss max_time) "
-              << " * (bruteforce branchbound heuristic dynamic_by_price)"
+              << " * (bruteforce branchbound heuristic"
+              << " dynamic_by_price fptas)"
               << std::endl;
 
     for (int i = 1; i < argc; i++) {
@@ -62,7 +63,7 @@ int main(int argc, char * argv[]){
             
             record.emplace_back(tasks[j].time_dynamic_programming_by_price());
 
-            record.emplace_back(tasks[j].time_fptas(0));
+            record.emplace_back(tasks[j].time_fptas(4));
 
             collector.add_record(ref, record);
         }

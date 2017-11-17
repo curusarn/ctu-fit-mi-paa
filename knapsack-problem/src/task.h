@@ -35,10 +35,10 @@ public:
     int solve_branch_and_bound();
     int solve_heuristic();
     int solve_dynamic_programming_by_price();
-    int solve_fptas(int precision);
+    int solve_fptas(double epsilon);
 
-    template <typename Call, typename... Args>
-    std::pair<int, double> time_call(Call call, Args... args);
+    template <typename Call>
+    std::pair<int, double> time_call(Call call);
 
     std::pair<int, double> time_bruteforce() { 
         return time_call(std::bind(&Task::solve_bruteforce, this)); };
@@ -49,16 +49,16 @@ public:
     std::pair<int, double> time_dynamic_programming_by_price() { 
         return time_call(std::bind(&Task::solve_dynamic_programming_by_price,
                                    this)); };
-    std::pair<int, double> time_fptas(int precision) { 
-        return time_call(std::bind(&Task::solve_fptas, this, precision)); };
+    std::pair<int, double> time_fptas(double epsilon) { 
+        return time_call(std::bind(&Task::solve_fptas, this, epsilon)); };
 };
 
-template <typename Call, typename... Args>
-std::pair<int, double> Task::time_call(Call call, Args... args) {
+template <typename Call>
+std::pair<int, double> Task::time_call(Call call) {
     //using namespace std;
     std::clock_t begin = std::clock();
 
-    int result = call(args...);
+    int result = call();
 
     std::clock_t end = std::clock();
 
@@ -71,7 +71,7 @@ std::pair<int, double> Task::time_call(Call call, Args... args) {
         number_of_runs *= 16;
         begin = std::clock();
         for(int i = 0; i < number_of_runs; i++)
-            call(args...);
+            call();
         end = std::clock();
         time = double(end - begin) / CLOCKS_PER_SEC;
     }
