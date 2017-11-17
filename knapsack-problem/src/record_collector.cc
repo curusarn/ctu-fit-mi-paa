@@ -35,7 +35,7 @@ void RecordCollector::print_result(std::ostream & os) {
         os << (methods[i].miss / count) << " "
            << (methods[i].time / count) << " " 
            << methods[i].max_miss << " " 
-           << methods[i].max_time << " "; 
+           << methods[i].max_time << "   "; 
     }
 
     os << std::endl;

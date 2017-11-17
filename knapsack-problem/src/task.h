@@ -6,8 +6,12 @@
 #include "item_solution.h"
 #define uint unsigned int
 
+#define MIN_ALLOWED_TIME 0.00001
+// CLOCKS_PER_SEC is about 1 * 10^(6)
+// so I allow minimal time of about 10^(-5) 
 
-typedef std::function<int()> Solve_call;
+
+//typedef std::function<int()> Solve_call;
 
 class Task;
 class Task {
@@ -31,8 +35,10 @@ public:
     int solve_branch_and_bound();
     int solve_heuristic();
     int solve_dynamic_programming_by_price();
+    int solve_fptas(int precision);
 
-    std::pair<int, double> time_call(Solve_call call);
+    template <typename Call, typename... Args>
+    std::pair<int, double> time_call(Call call, Args... args);
 
     std::pair<int, double> time_bruteforce() { 
         return time_call(std::bind(&Task::solve_bruteforce, this)); };
@@ -43,7 +49,36 @@ public:
     std::pair<int, double> time_dynamic_programming_by_price() { 
         return time_call(std::bind(&Task::solve_dynamic_programming_by_price,
                                    this)); };
+    std::pair<int, double> time_fptas(int precision) { 
+        return time_call(std::bind(&Task::solve_fptas, this, precision)); };
 };
+
+template <typename Call, typename... Args>
+std::pair<int, double> Task::time_call(Call call, Args... args) {
+    //using namespace std;
+    std::clock_t begin = std::clock();
+
+    int result = call(args...);
+
+    std::clock_t end = std::clock();
+
+    double time = double(end - begin) / CLOCKS_PER_SEC;
+
+    int number_of_runs = 1;
+    while (time < MIN_ALLOWED_TIME) {
+        // run call() multiple times and count the average running time
+        //      until you get something larget than MIN_ALLOWED_TIME
+        number_of_runs *= 16;
+        begin = std::clock();
+        for(int i = 0; i < number_of_runs; i++)
+            call(args...);
+        end = std::clock();
+        time = double(end - begin) / CLOCKS_PER_SEC;
+    }
+
+    return std::make_pair(result, time / number_of_runs);
+}
+
 
 template <typename T>
 std::vector<T> parse(std::ifstream & infile) {

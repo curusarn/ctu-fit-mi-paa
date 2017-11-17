@@ -43,7 +43,7 @@ int main(int argc, char * argv[]){
         
         assert(tasks.size() == solutions.size());
 
-        RecordCollector collector(problem_category, 4);
+        RecordCollector collector(problem_category, 5);
 
         for (uint j = 0; j < tasks.size(); j++) {
             std::vector<std::pair<int,double>> record;
@@ -61,6 +61,8 @@ int main(int argc, char * argv[]){
             record.emplace_back(tasks[j].time_heuristic());
             
             record.emplace_back(tasks[j].time_dynamic_programming_by_price());
+
+            record.emplace_back(tasks[j].time_fptas(0));
 
             collector.add_record(ref, record);
         }
