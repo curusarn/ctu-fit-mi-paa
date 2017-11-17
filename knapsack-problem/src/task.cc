@@ -75,14 +75,18 @@ int Task::_solve_branch_and_bound(const std::vector<int> & price_sums,
                                   int curr_price, int curr_weigth,
                                   uint item_idx) {
     
-    if (item_idx == items.size())
+    if (item_idx == items.size()) 
         return curr_weigth; // end of recursion - no more items
       
-    if (curr_weigth > capacity)
+    if (curr_weigth > capacity) {
+        //std::cout << "cut at " << item_idx << std::endl;
         return 0; // cut branches that exceed capacity
-
-    if (curr_price + price_sums[item_idx] <= best_price)
+    }        
+ 
+    if (curr_price + price_sums[item_idx] <= best_price) {
+        //std::cout << "CUT at " << item_idx << std::endl;
         return 0; // cut branches that won't give better solution 
+    }
 
     int res1 = _solve_branch_and_bound(price_sums, best_price,
                                        curr_price + items[item_idx].price,

@@ -19,40 +19,67 @@
 
 # abbreviations
 
-set terminal png size 800,600 enhanced font "Arial,16"
+# DATA FORMAT:
+# (miss time) * (average maximal) * 
+# bruteforce branch&Bound heuristic dynamicProgrammingByPrice 
+# FPTAS: 
+
+set terminal png size 800,600 enhanced font "Arial,12"
 # set termoption ps 1
 set key box 1
 set grid
 
-set output 'plots/miss_he.png'
-set title "Relative mistake - heuristic"
+
+set output 'plots/miss_fptas_rel2ProblemSize.png'
+set title "Relative mistake - FPTAS (relative to problem size)"
 set xlabel "Problem size"
 set ylabel "Relative mistake"
+set logscale y
 
 plot\
-    'results.txt' using 1:5 title 'maximal' pt 9 lc rgb 'red',\
-    'results.txt' using 1:2 title 'average' pt 7 lc rgb 'blue'
+    'results.txt' using 1:18 title 'average (e = 0.1)' pt 7, \
+    'results.txt' using 1:26 title 'average (e = 0.3)' pt 7, \
+    'results.txt' using 1:34 title 'average (e = 0.5)' pt 7, \
+    'results.txt' using 1:20 title 'maximal (e = 0.1)' pt 9, \
+    'results.txt' using 1:28 title 'maximal (e = 0.3)' pt 9, \
+    'results.txt' using 1:36 title 'maximal (e = 0.5)' pt 9
 
 
-set output 'plots/time_bf.png'
-set title "CPU time - bruteforce"
+set output 'plots/time_all.png'
+set title "CPU time - comparison"
+set xlabel "Problem size"
 set ylabel "Time [seconds]"
 set logscale y
 set key left top
 plot\
-    'results.txt' using 1:6 title 'maximal' pt 9 lc rgb 'red',\
-    'results.txt' using 1:3 title 'average' pt 7 lc rgb 'blue'
+    'results.txt' using 1:3 title 'bruteforce average' pt 7, \
+    'results.txt' using 1:7 title 'branch and bound average' pt 7, \
+    'results.txt' using 1:15 title 'dynamic programming average' pt 7, \
+    'results.txt' using 1:19 title 'FPTAS average (e = 0.1)' pt 7 , \
+    'results.txt' using 1:27 title 'FPTAS average (e = 0.3)' pt 7, \
+    'results.txt' using 1:35 title 'FPTAS average (e = 0.5)' pt 7
 
-set output 'plots/time_both.png'
-set title "CPU time - comparison" 
-plot\
-    'results.txt' using 1:3 title 'bruteforce average' pt 7 lc rgb 'green',\
-    'results.txt' using 1:4 title 'heuristic average' pt 7 lc rgb 'black'
 
-unset logscale y
-set output 'plots/time_he.png'
-set title "CPU time - heuristic"
-plot\
-    'results.txt' using 1:7 title 'maximal' pt 9 lc rgb 'red',\
-    'results.txt' using 1:4 title 'average' pt 7 lc rgb 'blue'
+#
+#set output 'plots/time_bf.png'
+#set title "CPU time - bruteforce"
+#set ylabel "Time [seconds]"
+#set logscale y
+#set key left top
+#plot\
+#    'results.txt' using 1:6 title 'maximal' pt 9 lc rgb 'red',\
+#    'results.txt' using 1:3 title 'average' pt 7 lc rgb 'blue'
+#
+#set output 'plots/time_both.png'
+#set title "CPU time - comparison" 
+#plot\
+#    'results.txt' using 1:3 title 'bruteforce average' pt 7 lc rgb 'green',\
+#    'results.txt' using 1:4 title 'heuristic average' pt 7 lc rgb 'black'
+#
+#unset logscale y
+#set output 'plots/time_he.png'
+#set title "CPU time - heuristic"
+#plot\
+#    'results.txt' using 1:7 title 'maximal' pt 9 lc rgb 'red',\
+#    'results.txt' using 1:4 title 'average' pt 7 lc rgb 'blue'
 
