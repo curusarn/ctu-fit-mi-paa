@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include <limits.h>
 #include "task.h" 
 #include "record_collector.h" 
 
@@ -29,7 +30,9 @@ int main(int argc, char * argv[]){
     }
 
     std::cout << "problem_category (miss time max_miss max_time) "
-              << " * (bruteforce branchbound heuristic)" << std::endl;
+              << " * (bruteforce branchbound heuristic dynamic_by_price)"
+              << std::endl;
+
     for (int i = 1; i < argc; i++) {
         int problem_category = std::stoi(argv[i]);
 
@@ -40,7 +43,7 @@ int main(int argc, char * argv[]){
         
         assert(tasks.size() == solutions.size());
 
-        RecordCollector collector(problem_category, 3);
+        RecordCollector collector(problem_category, 4);
 
         for (uint j = 0; j < tasks.size(); j++) {
             std::vector<std::pair<int,double>> record;
@@ -57,6 +60,8 @@ int main(int argc, char * argv[]){
 
             record.emplace_back(tasks[j].time_heuristic());
             
+            record.emplace_back(tasks[j].time_dynamic_programming_by_price());
+
             collector.add_record(ref, record);
         }
 
