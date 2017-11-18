@@ -37,12 +37,14 @@ set ylabel "Relative mistake"
 set logscale y
 
 plot\
-    'results.txt' using 1:18 title 'average (e = 0.1)' pt 7, \
-    'results.txt' using 1:26 title 'average (e = 0.3)' pt 7, \
-    'results.txt' using 1:34 title 'average (e = 0.5)' pt 7, \
-    'results.txt' using 1:20 title 'maximal (e = 0.1)' pt 9, \
-    'results.txt' using 1:28 title 'maximal (e = 0.3)' pt 9, \
-    'results.txt' using 1:36 title 'maximal (e = 0.5)' pt 9
+    'results/fp_0.01.txt' using 1:2 title 'average (e = 0.01)' pt 7, \
+    'results/fp_0.1.txt' using 1:2 title 'average (e = 0.1)' pt 7, \
+    'results/fp_0.3.txt' using 1:2 title 'average (e = 0.3)' pt 7, \
+    'results/fp_0.5.txt' using 1:2 title 'average (e = 0.5)' pt 7, \
+    'results/fp_0.01.txt' using 1:4 title 'maximal (e = 0.01)' pt 9, \
+    'results/fp_0.1.txt' using 1:4 title 'maximal (e = 0.1)' pt 9, \
+    'results/fp_0.3.txt' using 1:4 title 'maximal (e = 0.3)' pt 9, \
+    'results/fp_0.5.txt' using 1:4 title 'maximal (e = 0.5)' pt 9
 
 
 set output 'plots/time_all.png'
@@ -50,14 +52,16 @@ set title "CPU time - comparison"
 set xlabel "Problem size"
 set ylabel "Time [seconds]"
 set logscale y
-set key left top
+set key right bottom 
+#set key left top
 plot\
-    'results.txt' using 1:3 title 'bruteforce average' pt 7, \
-    'results.txt' using 1:7 title 'branch and bound average' pt 7, \
-    'results.txt' using 1:15 title 'dynamic programming average' pt 7, \
-    'results.txt' using 1:19 title 'FPTAS average (e = 0.1)' pt 7 , \
-    'results.txt' using 1:27 title 'FPTAS average (e = 0.3)' pt 7, \
-    'results.txt' using 1:35 title 'FPTAS average (e = 0.5)' pt 7
+    'results/bf.txt' using 1:3 title 'bruteforce average' pt 7, \
+    'results/bb.txt' using 1:3 title 'branch and bound average' pt 7, \
+    'results/dp.txt' using 1:3 title 'dynamic programming average' pt 7, \
+    'results/fp_0.01.txt' using 1:3 title 'FPTAS average (e = 0.01)' pt 7 , \
+    'results/fp_0.1.txt' using 1:3 title 'FPTAS average (e = 0.1)' pt 7 , \
+    'results/fp_0.3.txt' using 1:3 title 'FPTAS average (e = 0.3)' pt 7, \
+    'results/fp_0.5.txt' using 1:3 title 'FPTAS average (e = 0.5)' pt 7
 
 
 #

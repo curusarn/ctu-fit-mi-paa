@@ -31,7 +31,7 @@ int main(int argc, char * argv[]){
 
     std::cout << "problem_category (miss time max_miss max_time) "
               << " * (bruteforce branchbound heuristic"
-              << " dynamic_by_price fptas( 0.1, 0.2, ..., 1))"
+              << " dynamic_by_price fptas(0.1, 0.3, 0.5 0.01))"
               << std::endl;
 
     for (int i = 1; i < argc; i++) {
@@ -44,7 +44,7 @@ int main(int argc, char * argv[]){
         
         assert(tasks.size() == solutions.size());
 
-        RecordCollector collector(problem_category, 4 + 10);
+        RecordCollector collector(problem_category, 4 + 4 );
 
         for (uint j = 0; j < tasks.size(); j++) {
             std::vector<std::pair<int,double>> record;
@@ -63,8 +63,10 @@ int main(int argc, char * argv[]){
             
             record.emplace_back(tasks[j].time_dynamic_programming_by_price());
 
-            for (double i = 0.1; i <= 1; i += 0.1) 
-                record.emplace_back(tasks[j].time_fptas(i));
+            record.emplace_back(tasks[j].time_fptas(0.1));
+            record.emplace_back(tasks[j].time_fptas(0.3));
+            record.emplace_back(tasks[j].time_fptas(0.5));
+            record.emplace_back(tasks[j].time_fptas(0.01));
 
             collector.add_record(ref, record);
         }
