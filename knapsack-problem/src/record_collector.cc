@@ -12,37 +12,37 @@ void RecordCollector::add_record(int ref_price,
                             const std::vector<std::pair<int,double>> & record) {
      
     assert(record.size() > 0);
-    assert(ref_price == record[0].first);
-    assert(record.size() == methods.size());
+    assert(record.size() == measurements.size());
     count += 1;
    
     for (uint i = 0; i < record.size(); i++) {
         int price = record[i].first;
         double time = record[i].second;
         double miss = relative_miss(ref_price, price);
-        methods[i].miss += miss;
-        methods[i].time += time;
-        methods[i].max_miss = std::max(methods[i].max_miss, miss);
-        methods[i].max_time = std::max(methods[i].max_time, time);
+        measurements[i].miss += miss;
+        measurements[i].time += time;
+        measurements[i].max_miss = std::max(measurements[i].max_miss, miss);
+        measurements[i].max_time = std::max(measurements[i].max_time, time);
     }
-    //std::cerr << problem_category << " progress: " << count << " / ?50?" << std::endl;
+    //std::cerr << heading << " progress: " << count << " / ?50?" << std::endl;
 }
 
+
 void RecordCollector::print_result(std::ostream & os) {
-    os << problem_category << " ";
+    os << heading << " ";
     
-    for (uint i = 0; i < methods.size(); i++) {
-        os << (methods[i].miss / count) << " "
-           << (methods[i].time / count) << " " 
-           << methods[i].max_miss << " " 
-           << methods[i].max_time << "   "; 
+    for (uint i = 0; i < measurements.size(); i++) {
+        os << (measurements[i].miss / count) << " "
+           << (measurements[i].time / count) << " " 
+           << measurements[i].max_miss << " " 
+           << measurements[i].max_time << "   "; 
     }
 
     os << std::endl;
 }
 
-RecordCollector::RecordCollector(int pr_cat, int method_cnt)
-                                                : problem_category(pr_cat) {
-    methods.resize(method_cnt);
+RecordCollector::RecordCollector(double head, int measurement_cnt)
+                                                : heading(head) {
+    measurements.resize(measurement_cnt);
 }
 

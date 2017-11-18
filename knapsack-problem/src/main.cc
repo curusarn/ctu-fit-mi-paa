@@ -44,10 +44,13 @@ int main(int argc, char * argv[]){
         
         assert(tasks.size() == solutions.size());
 
+        std::vector<double> EPSILONS = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9};
         RecordCollector collector(problem_category, 4 + 4 );
+        RecordCollector fptas_collector(problem_category, EPSILONS.size() );
 
         for (uint j = 0; j < tasks.size(); j++) {
             std::vector<std::pair<int,double>> record;
+            std::vector<std::pair<int,double>> fptas_record;
 
             int ref = solutions[j].get_total_price();
 
@@ -69,9 +72,13 @@ int main(int argc, char * argv[]){
             record.emplace_back(tasks[j].time_fptas(0.01));
 
             collector.add_record(ref, record);
+
+            for (auto e : EPSILONS)
+                fptas_record.emplace_back(tasks[j].time_fptas(e));
         }
 
         collector.print_result(std::cout);
+
     }
 
     return 0;

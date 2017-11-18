@@ -30,11 +30,37 @@ set key box 1
 set grid
 
 
+
+set output 'plots/time_fptas_rel2Epsilon.png'
+set title "CPU time - FPTAS (relative to epsilon)"
+set xlabel "Epsilon"
+set ylabel "Time [seconds]"
+#set logscale y
+set key right top
+
+plot\
+    'results/fptas_epsilon.txt' using 1:3 title 'average mistake' pt 7, \
+    'results/fptas_epsilon.txt' using 1:5 title 'maximal mistake' pt 9
+
+
+set output 'plots/miss_fptas_rel2Epsilon.png'
+set title "Relative mistake - FPTAS (relative to epsilon)"
+set xlabel "Epsilon"
+set ylabel "Relative mistake"
+set logscale y
+set key right bottom
+
+plot\
+    'results/fptas_epsilon.txt' using 1:2 title 'average mistake' pt 7, \
+    'results/fptas_epsilon.txt' using 1:4 title 'maximal mistake' pt 9
+
+
 set output 'plots/miss_fptas_rel2ProblemSize.png'
 set title "Relative mistake - FPTAS (relative to problem size)"
 set xlabel "Problem size"
 set ylabel "Relative mistake"
 set logscale y
+set key right top 
 
 plot\
     'results/fp_0.01.txt' using 1:2 title 'average (e = 0.01)' pt 7, \
@@ -53,7 +79,7 @@ set xlabel "Problem size"
 set ylabel "Time [seconds]"
 set logscale y
 set key right bottom 
-#set key left top
+
 plot\
     'results/bf.txt' using 1:3 title 'bruteforce average' pt 7, \
     'results/bb.txt' using 1:3 title 'branch and bound average' pt 7, \
@@ -62,7 +88,6 @@ plot\
     'results/fp_0.1.txt' using 1:3 title 'FPTAS average (e = 0.1)' pt 7 , \
     'results/fp_0.3.txt' using 1:3 title 'FPTAS average (e = 0.3)' pt 7, \
     'results/fp_0.5.txt' using 1:3 title 'FPTAS average (e = 0.5)' pt 7
-
 
 #
 #set output 'plots/time_bf.png'
