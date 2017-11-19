@@ -50,14 +50,14 @@ I'm using Hamiltonian path<sup>[4]</sup> to iterate trough all solutions in such
 I'm incrementing a counter in each step and I'm using bitwise representation of this counter to calculate next item to add or remove.  
 
 ### Branch & bound
-Imagine the state space of all possible solutions as a binary tree where each leaf represents one solution an each inner node represents a set of solutions. 
+Imagine the state space of all possible solutions as a binary tree where each leaf represents one solution and each inner node represents a set of solutions. 
 
 First I sort the items by their price.  
-Then I precompute the maxumum price gain that can be achieved in each level of the tree (state space).   
+Then I precompute the maximal price gain that can be achieved in each level of the tree (state space).   
 I use **recursion** to explore the state space.   
-I prune the branches that won't contain optimal solution. (one of following is true):
+I prune the branches that cannot contain optimal solution. (one of following is true):
 - Current weight is greater than knapsack capacity.
-- Current price plus maximum price gain is less than price of already discovered solution.
+- Current price plus maximal price gain is less than price of already discovered solution.
 
 ### Price-per-weight heuristic 
 First I sort the items by their price per weight.    
@@ -65,25 +65,24 @@ In each step I add item with the higest price:weight ratio.
 I stop when the next item can't be added because of insufficient capacity.
 
 ### Dynamic programming (decomposition by price) 
-First I sort the items by their price.
+First I sort the items by their price.  
 Then I create a table where each cell represents an optimal solution to a subproblem.  
 Each cell contains a weight of the optimal solution for given subproblem (or INF if solution does not exist).  
 Each cell in `Xth` row represents solutions with price equal to `X`.  
 Each cell in `Xth` column represents solutions that only considers first `X` items from original problem.  
 To get optimal solution for each cell we use solutions to subproblems from previous column.  
-Optimal solution for each cell either **adds item from coresponding column** or **uses previous solution for the same price** whichever gives lesser total weight.  
+Optimal solution for each cell either **adds item coresponding to the column** or **uses previous solution with the same price** whichever gives lesser total weight.   
+Final solution is the one with highest price with weigth lower than capacity.
 
 ### FPTAS
-I divide the prices of all items by `(ε * P) / N` where `ε` is parameter, `P` is the price of the most expensive item and `N` is number of items.  
-This reduces the size of the table and complexity of the solution.  
-Then I continue the same way as I would with the **dynamic programming** solution.  
-Finally I calcualte the exact price of the solution using original prices and approximate solution.  
+I divide the prices of all items by `(ε * P) / N` where `ε` is parameter, `P` is the price of the most expensive item and `N` is number of items.   
+This reduces the size of the table and the complexity of the solution.   
+Then I continue the same way as I would with the **dynamic programming** solution.   
+Finally I calcualte the exact price of the solution using original prices and approximate solution retrieved from the table.
 
 ## Performance measurements 
 
 ![CPU time - comparison](plots/time_all.png)
-
-
 ![CPU time - FPTAS](plots/time_fptas_rel2Epsilon.png)
 ![Relative mistake - FPTAS](plots/miss_fptas_rel2Epsilon.png)
 
@@ -101,12 +100,12 @@ Item that should be added or removed next is calculated in O\*(1).
 ### Branch & bound
 Branch & bound runs in **O(2^N )** as we can see in the plot.
 
-The algorithm has to traverse the (comlplete) binary tree with 2^(N+1)-1 nodes in the worst case scenario.
+The algorithm has to traverse the (complete) binary tree with 2^(N+1)-1 nodes in the worst case scenario.  
 There is a constant amount of operations that is performed for each node.  
 
 We can see that it runs slower than bruteforce solution which *makes sense* because:
 - We are using recursion which gives us more overhead than iterative solution.
-- And Bruteforce has to try 2^N different solutions whereas Branch & bound has 2^(N+1)-1 nodes to explore.   
+- **Bruteforce** has to try **2^N** different solutions whereas **Branch & bound** has **2^(N+1)-1** nodes to explore.    
 It seems that we would have to prune more than half of the nodes to match the performance of the iterative bruteforce.  
 
 *NOTE: I have also measured times for Recursive bruteforce to confirm that my Branch & bound is not broken and Recursive bruteforce runs slower. (not included in the graphs)*
@@ -118,17 +117,18 @@ First we sort all the items in O(N\*logN).
 Then we keep adding items until we run out of capacity - O(N).
 
 ### Dynamic programming solution
-Dynamic programming solutoin runs in O(N\*S + N\*logN) which is almost always subset of **O(N\*S)** (if O(logN) is subset of O(S)).
+Dynamic programming solutoin runs in O(N\*S + N\*logN) which is almost always subset of **O(N\*S)** (if `logN < S`).
+`S` is sum of prices.   
 
 First we sort all the items in O(N\*logN).  
 Then we calcualte the sum of all prices (`S`) in O(N).
 
-After that we need to solve table of all `N * S` subproblems.
+After that we need to solve table of all `N * S` subproblems.  
 And there is a constant amount of operation that is performed for each cell of the table.
 
 ### FPTAS
 #### Complexity
-FPTAS solution runs in **O(N^2\*S/(ε\*P))**.
+FPTAS solution runs in **O(N^2\*S/(ε\*P))**.  
 `S` is sum of prices.   
 `K = (ε*P)/N`    
 `P` is the price of the most expensive item.   
@@ -143,7 +143,7 @@ For small `ε` FPTAS is slower than dynamic programming solution because we are 
 
 
 #### Relative mistake 
-Relative mistake of any FPTAS solution is never higher than `ε`.
+Relative mistake of any FPTAS solution is never higher than `ε`.  
 Relative mistake is directly proportional to `ε`.
 
 
