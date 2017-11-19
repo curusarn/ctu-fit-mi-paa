@@ -37,8 +37,8 @@ plot: results
 
 pdf: src/plots.gp
 	grip README.md localhost:6420 --title="MI-PAA - Knapsack problem" &
-	sleep 10
-	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-0_knap.pdf
+	sleep 5 
+	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-1_knap.pdf
 	pkill grip
 
 tar:

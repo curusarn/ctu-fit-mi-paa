@@ -36,6 +36,8 @@ A dynamic programming algorithm will examine the previously solved sub problems 
 
 I'm **decomposing** the knapsack problem into a sub problems **by price**.
 
+<br>
+<br>
 
 ### FPTAS
 A FPTAS is an algorithm which takes an instance of an optimization problem and a parameter `ε > 0` and, in polynomial time, produces a solution that is within a factor `1 + ε` of being optimal (or `1 - ε` for maximization problems).
@@ -81,6 +83,9 @@ This reduces the size of the table and the complexity of the solution.
 Then I continue the same way as I would with the **dynamic programming** solution.   
 Finally I calculate the exact price of the solution using original prices and approximate solution retrieved from the table.
 
+<br>
+<br>
+<br>
 
 ## Performance measurements 
 
@@ -118,6 +123,9 @@ Heuristic runs in **O(N\*logN)**.
 First we sort all the items in O(N\*logN).  
 Then we keep adding items until we run out of capacity - O(N).
 
+<br>
+<br>
+<br>
 
 ### Dynamic programming solution
 Dynamic programming solution runs in O(N\*S + N\*logN) which is almost always subset of **O(N\*S)** (if `logN < S`).  
