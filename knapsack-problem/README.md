@@ -36,8 +36,7 @@ Dynamic programming is a method for solving a complex problem by breaking it dow
 I'm **decomposing** the knapsack problem into a sub problems **by price**.
 
 ### FPTAS
-A FPTAS is an algorithm which takes an instance of an optimization problem and a parameter `ε > 0` and, in polynomial time, produces a solution that is within a factor `1 + ε` of being optimal (or `1 - ε` for maximization problems). 
-
+A FPTAS is an algorithm which takes an instance of an optimization problem and a parameter `ε > 0` and, in polynomial time, produces a solution that is within a factor `1 + ε` of being optimal (or `1 - ε` for maximization problems).
 Any FPTAS algorithm is polynomial in both the problem size `N` and `1/ε`.<sup>[7]</sup>
 
 My FPTAS solution is actually just dynamic programming solution (using decomposition by price) where the total number of sub problems is reduced.
@@ -55,7 +54,7 @@ Imagine the state space of all possible solutions as a binary tree where each le
 First I sort the items by their price.  
 Then I precompute the maximal price gain that can be achieved in each level of the tree (state space).   
 I use **recursion** to explore the state space.   
-I prune the branches that cannot contain optimal solution. (one of following is true):
+I prune the branches that cannot contain optimal solution - one of following is true:
 - Current weight is greater than knapsack capacity.
 - Current price plus maximal price gain is less than price of already discovered solution.
 
@@ -68,8 +67,8 @@ I stop when the next item can't be added because of insufficient capacity.
 First I sort the items by their price.  
 Then I create a table where each cell represents an optimal solution to a sub problem.  
 Each cell contains a weight of the optimal solution for given sub problem (or INF if solution does not exist).  
-Each cell in `Xth` row represents solutions with price equal to `X`.  
-Each cell in `Xth` column represents solutions that only considers first `X` items from original problem.  
+`Xth` row represents solutions with price equal to `X`.  
+`Xth` column represents solutions that only considers first `X` items from original problem.  
 To get optimal solution for each cell we use solutions to sub problems from previous column.  
 Optimal solution for each cell either **adds item corresponding to the column** or **uses previous solution with the same price** whichever gives lesser total weight.   
 Final solution is the one with highest price with weight lower than capacity.
@@ -103,12 +102,12 @@ Branch & bound runs in **O(2^N )** as we can see in the plot.
 The algorithm has to traverse the (complete) binary tree with 2^(N+1)-1 nodes in the worst case scenario.  
 There is a constant amount of operations that is performed for each node.  
 
-We can see that it runs slower than bruteforce solution which *makes sense* because:
+We can see that the algorithm slower than bruteforce solution which *makes sense* because:
 - We are using recursion which gives us more overhead than iterative solution.
-- **Bruteforce** has to try **2^N** different solutions whereas **Branch & bound** has **2^(N+1)-1** nodes to explore.    
+- **Bruteforce** has to try **2^N** different solutions whereas **branch & bound** has **2^(N+1)-1** nodes to explore.    
 It seems that we would have to prune more than half of the nodes to match the performance of the iterative bruteforce.  
 
-*NOTE: I have also measured times for Recursive bruteforce to confirm that my Branch & bound is not broken and Recursive bruteforce runs slower. (not included in the graphs)*
+*NOTE: I have also measured times for recursive bruteforce to confirm that my branch & bound is not broken and I have confirmed that branch & bound gives me improvement over recursive bruteforce. (not included in the plots)*
 
 ### Heuristic
 Heuristic runs in **O(N\*logN)**.
