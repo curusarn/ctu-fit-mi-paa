@@ -194,7 +194,7 @@ int Task::solve_dynamic_programming_by_price() {
                 max_price = p;
         }
         if (p - items[items.size() - 1].price > max_price || p > price_sum)
-            break; // all partial solutions are over capacity
+            break; // all partial solutions are over capacity OR price > sum of all prices
                    //   no possible better solution
         p++;
     }
