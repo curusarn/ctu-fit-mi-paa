@@ -27,6 +27,8 @@ class Task {
                         int item_idx, int price) const;
 public:
     Task(const std::string & line);
+    Task(int cap, const std::vector<int> & weights,
+                  const std::vector<int> & costs);
     Task(const Task & task) : id(task.id), capacity(task.capacity),
                               items(task.items) {};
     void print();
@@ -76,6 +78,7 @@ std::pair<int, double> Task::time_call(Call call) {
         time = double(end - begin) / CLOCKS_PER_SEC;
     }
 
+    //std::cout << result << " | " << time / number_of_runs << std::endl;
     return std::make_pair(result, time / number_of_runs);
 }
 

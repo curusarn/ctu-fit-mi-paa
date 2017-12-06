@@ -22,10 +22,21 @@ Task::Task(const std::string & line) {
     }
 }
 
+Task::Task(int cap, const std::vector<int> & weights, 
+                    const std::vector<int> & prices /* costs */) {
+    assert(weights.size() == prices.size());
+    items.reserve(weights.size());
+    for (uint i = 0; i < weights.size(); i++) {
+        items.emplace_back(prices[i], weights[i]);
+    }
+    capacity = cap;
+    id = 42;
+}
+
 // O*(1)
 uint Task::get_first_zero_bit(uint64_t bits){
     uint64_t mask = 1;
-    uint index = 0;
+    uint index = 0;;
     while ((bits & mask) != 0) {
         mask = (mask<<1);
         index++;
@@ -75,18 +86,26 @@ int Task::_solve_branch_and_bound(const std::vector<int> & price_sums,
                                   int curr_price, int curr_weigth,
                                   uint item_idx) {
     
-    if (item_idx == items.size()) 
-        return curr_weigth; // end of recursion - no more items
-      
+    //for (uint i = 0; i < item_idx; i++)
+    //    std::cout << ">";
+    //std::cout << "B: " << best_price
+    //          << " cp: " << curr_price << " cw: " << curr_weigth << std::endl;
+
     if (curr_weigth > capacity) {
-        //std::cout << "cut at " << item_idx << std::endl;
+        //std::cout << "CUT capacity" << std::endl;
         return 0; // cut branches that exceed capacity
-    }        
+    }
+            
+    if (item_idx == items.size()) {
+        //std::cout << "$$$" << std::endl;
+        return curr_price; // end of recursion - no more items
+    }
  
     if (curr_price + price_sums[item_idx] <= best_price) {
-        //std::cout << "CUT at " << item_idx << std::endl;
+        //std::cout << "CUT price sums" << std::endl;
         return 0; // cut branches that won't give better solution 
     }
+    
 
     int res1 = _solve_branch_and_bound(price_sums, best_price,
                                        curr_price + items[item_idx].price,
@@ -107,7 +126,11 @@ int Task::_solve_branch_and_bound(const std::vector<int> & price_sums,
 int Task::solve_branch_and_bound() {
     // sort by weight (desc)
     std::sort(items.begin(), items.end(),
-          [](const Item & a, const Item & b){ return a.price > b.price; });
+          [](const Item & a, const Item & b){ 
+              if (a.price > b.price) return true;
+              if (a.price < b.price) return false;
+              return (a.weight < b.weight);
+          });
 
     assert( items[0].price >= items[1].price );
 

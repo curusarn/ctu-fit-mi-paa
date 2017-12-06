@@ -1,9 +1,12 @@
 
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include "record_collector.h"
 
 double RecordCollector::relative_miss(double optimal, double approx) {
+    if (optimal == approx) return 0;
+    assert(optimal != 0.0);
     return (optimal - approx) / optimal;
 }
 
@@ -32,7 +35,8 @@ void RecordCollector::print_result(std::ostream & os) {
     os << heading << " ";
     
     for (uint i = 0; i < measurements.size(); i++) {
-        os << (measurements[i].miss / count) << " "
+        double m = (measurements[i].miss / count);
+        os << m << " "
            << (measurements[i].time / count) << " " 
            << measurements[i].max_miss << " " 
            << measurements[i].max_time << "   "; 
@@ -42,7 +46,7 @@ void RecordCollector::print_result(std::ostream & os) {
 }
 
 RecordCollector::RecordCollector(double head, int measurement_cnt)
-                                                : heading(head) {
+                                                    : heading(head) {
     measurements.resize(measurement_cnt);
 }
 

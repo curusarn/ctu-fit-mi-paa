@@ -24,12 +24,39 @@
 # bruteforce branch&Bound heuristic dynamicProgrammingByPrice 
 # FPTAS: 
 
+# GENERAL SETTINGS
+
 set terminal png size 800,600 enhanced font "Arial,12"
 # set termoption ps 1
 set key box 1
 set grid
 
+# FIRST SUBMISSION
+#
+#set output 'plots/time_bf.png'
+#set title "CPU time - bruteforce"
+#set ylabel "Time [seconds]"
+#set logscale y
+#set key left top
+#plot\
+#    'results.txt' using 1:6 title 'maximal' pt 9 lc rgb 'red',\
+#    'results.txt' using 1:3 title 'average' pt 7 lc rgb 'blue'
+#
+#set output 'plots/time_both.png'
+#set title "CPU time - comparison" 
+#plot\
+#    'results.txt' using 1:3 title 'bruteforce average' pt 7 lc rgb 'green',\
+#    'results.txt' using 1:4 title 'heuristic average' pt 7 lc rgb 'black'
+#
+#unset logscale y
+#set output 'plots/time_he.png'
+#set title "CPU time - heuristic"
+#plot\
+#    'results.txt' using 1:7 title 'maximal' pt 9 lc rgb 'red',\
+#    'results.txt' using 1:4 title 'average' pt 7 lc rgb 'blue'
 
+
+# SECOND SUBMISSION
 
 set output 'plots/time_fptas_rel2Epsilon.png'
 set title "CPU time - FPTAS (relative to epsilon)"
@@ -89,26 +116,4 @@ plot\
     'results/fp_0.3.txt' using 1:3 title 'FPTAS average (e = 0.3)' pt 7, \
     'results/fp_0.5.txt' using 1:3 title 'FPTAS average (e = 0.5)' pt 7
 
-#
-#set output 'plots/time_bf.png'
-#set title "CPU time - bruteforce"
-#set ylabel "Time [seconds]"
-#set logscale y
-#set key left top
-#plot\
-#    'results.txt' using 1:6 title 'maximal' pt 9 lc rgb 'red',\
-#    'results.txt' using 1:3 title 'average' pt 7 lc rgb 'blue'
-#
-#set output 'plots/time_both.png'
-#set title "CPU time - comparison" 
-#plot\
-#    'results.txt' using 1:3 title 'bruteforce average' pt 7 lc rgb 'green',\
-#    'results.txt' using 1:4 title 'heuristic average' pt 7 lc rgb 'black'
-#
-#unset logscale y
-#set output 'plots/time_he.png'
-#set title "CPU time - heuristic"
-#plot\
-#    'results.txt' using 1:7 title 'maximal' pt 9 lc rgb 'red',\
-#    'results.txt' using 1:4 title 'average' pt 7 lc rgb 'blue'
 
