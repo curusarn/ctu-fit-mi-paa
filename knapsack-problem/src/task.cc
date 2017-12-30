@@ -320,7 +320,7 @@ int Task::solve_annealing(int max_steps, double starting_temp,
     std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     std::uniform_real_distribution<> rand_prob(0, 1.0);
     std::uniform_int_distribution<> rand_item(0, items.size() - 1);
-    std::uniform_int_distribution<> rand_bit_cnt(0, items.size() / 10);
+    std::uniform_int_distribution<> rand_bit_cnt(0, items.size() / 20);
 
     // starting with empty
     std::vector<bool> curr_bitset(items.size(), false); 

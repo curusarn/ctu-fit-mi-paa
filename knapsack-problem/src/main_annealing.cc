@@ -14,20 +14,20 @@
 #define NEUTRAL_PRICE 40
 #define NEUTRAL_RATIO 0.65  
 #define NEUTRAL_GRANULARITY 0 
-#define NEUTRAL_PROBLEM_SIZE 40 
+#define NEUTRAL_PROBLEM_SIZE 100 
 
 #define X_VALUES 42
-#define REPEAT 100 
+#define REPEAT 100
 #define MIN_PROBLEM_SIZE 5 
 #define MAX_PROBLEM_SIZE 24 
 
 // simulated annealing
 // max_steps, starting_temp, frozen_const, equlibrium_const, cooling_koef
-#define SA_MAX_STEPS 4000
-#define SA_START_TEMP 200
+#define SA_MAX_STEPS 6000
+#define SA_START_TEMP 60
 #define SA_FROZEN_CONST 50
 #define SA_EQULIBRIUM_CONST 10 
-#define SA_COOLING_KOEF 0.95
+#define SA_COOLING_KOEF 0.99
 
 
 const char* DATA_PATH = "data/";

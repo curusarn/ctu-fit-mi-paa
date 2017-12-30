@@ -90,4 +90,4 @@ clean:
 
 .PHONY: clean deps tar O2 valgrind O3 Ofast pdf plot results knapgen results_knapgen
 
-.SILENT: _annealing10 annealing10 
+.SILENT: _annealing annealing10 
