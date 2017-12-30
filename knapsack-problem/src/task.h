@@ -25,6 +25,10 @@ class Task {
                                 int, int, uint);
     int get_safe_weight(const std::vector<std::vector<int>> & weights,
                         int item_idx, int price) const;
+    //bool _frozen();
+    //bool _equlibrium();
+    //double _cool(double temp);
+
 public:
     Task(const std::string & line);
     Task(int cap, const std::vector<int> & weights,
@@ -32,12 +36,15 @@ public:
     Task(const Task & task) : id(task.id), capacity(task.capacity),
                               items(task.items) {};
     void print();
+    void print(const std::vector<bool> & bitset);
 
     int solve_bruteforce();
     int solve_branch_and_bound();
     int solve_heuristic();
     int solve_dynamic_programming_by_price();
     int solve_fptas(double epsilon);
+    int solve_annealing(int max_steps, double starting_temp, int frozen_const,
+                        int equlibrium_const, double cooling_koef);
 
     template <typename Call>
     std::pair<int, double> time_call(Call call);
@@ -53,6 +60,11 @@ public:
                                    this)); };
     std::pair<int, double> time_fptas(double epsilon) { 
         return time_call(std::bind(&Task::solve_fptas, this, epsilon)); };
+    std::pair<int, double> time_annealing(int max_steps, double starting_temp,
+                int frozen_const, int equlibrium_const, double cooling_koef) { 
+        return time_call(std::bind(&Task::solve_annealing, this,
+                                   max_steps, starting_temp, frozen_const, 
+                                   equlibrium_const, cooling_koef)); };
 };
 
 template <typename Call>

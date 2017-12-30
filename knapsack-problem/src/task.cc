@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <cassert>
 #include <limits.h>
+#include <random>
+#include <cmath>
 #include "task.h"
 
 #define INF (INT_MAX / 2)
@@ -64,8 +66,10 @@ int Task::solve_bruteforce() {
 
         //if (x > 30) std::cerr << "  >>> progress: " << x << " / ~" << items.size() << std::endl;
         //std::cout << "i: " << i << " x: " << x << std::endl;
-        if (x >= items.size()) // Hamiltonian path reached non-existing element
+        if (x >= items.size()) { // Hamiltonian path reached non-existing element
+            print(best_bitset);
             return best_price;  
+        }
 
         int sign = add_or_delete(x, curr_bitset);        
         curr_price += sign * items[x].price;
@@ -289,9 +293,133 @@ int Task::solve_fptas(double epsilon) {
     return max_price;
 }
 
+// simulated annealing
+
+bool _frozen() {
+    return false;
+}
+
+bool _equlibrium() {
+    return true;
+}
+
+double _cool(double temp, double cooling_koef) {
+    return temp * cooling_koef;
+}
+
+bool _use_new_solution(int old_price, int new_price, double temp, double rand) {
+    if (new_price > old_price)
+        return true;
+    return rand < std::exp( +(new_price - old_price) / temp);
+}
+
+int Task::solve_annealing(int max_steps, double starting_temp,
+                              int frozen_const, int equlibrium_const,
+                              double cooling_koef) {
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<> rand_prob(0, 1.0);
+    std::uniform_int_distribution<> rand_item(0, items.size() - 1);
+    std::uniform_int_distribution<> rand_bit_cnt(0, items.size() / 10);
+
+    // starting with empty
+    std::vector<bool> curr_bitset(items.size(), false); 
+    //std::vector<bool> best_bitset;
+    //best_bitset = curr_bitset;
+
+    int curr_weight = 0;
+
+    int curr_price = 0;
+    //int best_price = curr_price;
+    double temp = starting_temp;
+
+    int steps_wo_new_state = 0; // frozen
+    //int no_new_states = 0; // equlibrium
+    int steps_since_cooling = 0; // equlibrium
+    for (int i = 0; i < max_steps; i++) {
+        std::cout << i << " " << curr_price << " " << temp << std::endl;
+        steps_since_cooling++;
+
+        if (steps_wo_new_state > frozen_const) {
+            //std::cerr << "FROZEN" << std::endl;
+            break; // frozen
+        }
+        
+        if (steps_since_cooling > equlibrium_const) {
+            temp = _cool(temp, cooling_koef);
+            steps_since_cooling = 0;
+        }
+        
+        // get neighbour
+        uint item_cnt = rand_bit_cnt(gen);
+        auto item_ids = std::vector<int>();
+        item_ids.reserve(item_cnt);
+
+        int new_price = curr_price;
+        int new_weight = curr_weight;
+        for (uint j = 0; j < item_cnt; j++) { 
+            int item_id = rand_item(gen);
+            item_ids.push_back(item_id);
+            int sign = add_or_delete(item_id, curr_bitset);
+            new_price += items[item_id].price * sign;
+            new_weight += items[item_id].weight * sign;
+        }
+
+        // weight policy - deny solutions over capacity
+        if (new_weight > capacity) {
+            // revert add_or_delete
+            for (uint j = 0; j < item_ids.size(); j++)  
+                add_or_delete(item_ids[j], curr_bitset);
+
+            steps_wo_new_state++;
+            continue;
+        }
+
+        if (new_price > curr_price) {
+            assert(new_weight <= capacity);
+
+            curr_price = new_price;
+            curr_weight = new_weight;
+
+            steps_wo_new_state = 0;
+
+            //if (curr_price > best_price) {
+            //    best_price = curr_price;
+            //    best_bitset = curr_bitset;
+            //}
+            continue;
+        }
+
+        // try solution
+        if (_use_new_solution(curr_price, new_price, temp, rand_prob(gen))) {
+            curr_price = new_price;
+            curr_weight = new_weight;
+
+            steps_wo_new_state = 0;
+        }
+        else {
+            // revert add_or_delete
+            for (uint j = 0; j < item_ids.size(); j++)  
+                add_or_delete(item_ids[j], curr_bitset);
+
+            steps_wo_new_state++;
+        }
+        
+    }
+    return curr_price;
+}
+
 void Task::print() {
     std::cout << "ID: " << id << std::endl << "cap: " << capacity << std::endl;
     for (uint i = 0; i < items.size(); i++) 
         std::cout << items[i].price << " / " << items[i].weight << std::endl;
+    std::cout << std::endl;
+}
+
+void Task::print(const std::vector<bool> & bitset) {
+    std::cout << "ID: " << id << std::endl << "cap: " << capacity << std::endl;
+    for (uint i = 0; i < items.size(); i++) 
+        std::cout << items[i].price << " / " << items[i].weight
+                  << " -> " << bitset[i] << std::endl;
     std::cout << std::endl;
 }

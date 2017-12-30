@@ -3,8 +3,10 @@ SHELL=/bin/bash
 files=src/main.cc src/task.cc src/record_collector.cc src/item_solution.cc
 files_fptas=src/main_fptas.cc src/task.cc src/record_collector.cc src/item_solution.cc
 files_knapgen=src/main_knapgen.cc src/task.cc src/record_collector.cc src/item_solution.cc src/knapgen/knapcore.c
+files_annealing=src/main_annealing.cc src/task.cc src/record_collector.cc src/item_solution.cc src/knapgen/knapcore.c
 command=./main.out 4 10 15 20 22 25 27 30 32 35 37 40
 command_knapgen=./main.out
+command_annealing=./main.out
 
 
 O2:
@@ -25,6 +27,19 @@ fptas:
 knapgen:
 	g++ -std=c++11 -g -pedantic -Wall -Wextra -O2 -o main.out ${files_knapgen} && ${command_knapgen}
 
+annealing:
+	g++ -std=c++11 -g -pedantic -Wall -Wextra -O2 -o main.out ${files_annealing} && ${command_annealing} > /tmp/annealing.txt
+	gnuplot -c src/plots_annealing.gp
+	feh /tmp/annealing_plot.png &
+
+annealing10:
+	g++ -std=c++11 -g -pedantic -Wall -Wextra -O2 -o main.out ${files_annealing}
+	for i in {1..10}; do make _annealing; done
+
+_annealing:
+	${command_annealing} > /tmp/annealing.txt
+	gnuplot -c src/plots_annealing.gp
+	feh /tmp/annealing_plot.png &
 
 results:
 	cat results/all.txt | tr -s ' ' > results/trim_all.txt
@@ -74,3 +89,5 @@ clean:
 	-rm *.png *.pdf *.tar *.out
 
 .PHONY: clean deps tar O2 valgrind O3 Ofast pdf plot results knapgen results_knapgen
+
+.SILENT: _annealing10 annealing10 
