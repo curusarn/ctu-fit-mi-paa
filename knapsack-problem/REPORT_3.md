@@ -4,7 +4,7 @@
 ## Problem specification
 The knapsack problem or rucksack problem is a problem in combinatorial optimization: Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.<sup>[1]</sup>  
 
-Exact definition and instructions: https://edux.fit.cvut.cz/courses/MI-PAA/homeworks/01/start
+Exact definition and instructions: https://edux.fit.cvut.cz/courses/MI-PAA/homeworks/04/start
 
 ## Possible solutions
 - Bruteforce
@@ -88,8 +88,11 @@ title: 100 runs (better statistical TODO)
 **Average relative mistake: 2%**
 
 title: 10 runs (better visibility of individual runs)
+
 ![Simulated annealing](plots/annealing_plot_100items_10runs.png)
+
 title: 100 runs (better statistical TODO)
+
 ![Simulated annealing](plots/annealing_plot_100items_100runs.png)
 
 
