@@ -65,9 +65,11 @@ I have used knapgen
 **Average relative mistake: 0.5%**
 
 title: 10 runs (better visibility of individual runs)
+
 ![Simulated annealing](plots/annealing_plot_40items_10runs.png)
 
 title: 100 runs (better statistical TODO)
+
 ![Simulated annealing](plots/annealing_plot_40items_100runs.png)
 
 ### Random generator parameter values
@@ -87,13 +89,16 @@ title: 100 runs (better statistical TODO)
 
 **Average relative mistake: 2%**
 
+
 title: 10 runs (better visibility of individual runs)
+
 
 ![Simulated annealing](plots/annealing_plot_100items_10runs.png)
 
 title: 100 runs (better statistical TODO)
 
 ![Simulated annealing](plots/annealing_plot_100items_100runs.png)
+
 
 
 *Relative mistake was calculated in reference to dynamic programming solution.*
