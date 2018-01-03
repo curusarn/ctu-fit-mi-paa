@@ -67,10 +67,10 @@ plot_knapgen: results_knapgen
 	gnuplot -c src/plots_knapgen.gp 
 
 
-pdf: plot
-	grip README_br.md localhost:6420 --title="MI-PAA - Knapsack problem" &
+pdf:
+	grip REPORT_3_br.md localhost:6420 --title="MI-PAA - Knapsack problem" &
 	sleep 5 
-	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-1_knap.pdf
+	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-3_knap.pdf
 	pkill grip
 
 pdf_knapgen: plot_knapgen 
@@ -80,7 +80,7 @@ pdf_knapgen: plot_knapgen
 	pkill grip
 
 tar:
-	tar -zcvf letsimon-fit-cvut-mi-paa-2_knap.tar.gz src/* Makefile
+	tar -zcvf letsimon-fit-cvut-mi-paa-3_knap.tar.gz src/* Makefile
 
 deps:
 	#Deps: gcc, gnuplot, tar, wkhtmltopdf, grip (from pip)
