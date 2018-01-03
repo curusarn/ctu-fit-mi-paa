@@ -27,7 +27,9 @@ Simulated annealing is a probabilistic technique for approximating the global op
 
 “Annealing” refers to an analogy with thermodynamics, specifically with the way that metals cool and anneal. Simulated annealing uses the objective function of an optimization problem instead of the energy of a material.<sup>[2]</sup>
 
-The algorithm is basically hill-climbing except instead of picking the best move, it picks a random move. If the selected move improves the solution, then it is always accepted. Otherwise, the algorithm makes the move anyway with some probability less than 1. The probability decreases exponentially with the “badness” of the move, which is the amount by which the solution is worsened (i.e., energy is increased.)<sup>[2]</sup>
+The algorithm is basically hill-climbing except instead of picking the best move, it picks a random move. If the selected move improves the solution, then it is always accepted. Otherwise, the algorithm makes the move anyway with some probability less than 1. The probability decreases exponentially with the “badness” of the move, which is the amount by which the solution is worsened (i.e., energy is increased.)<sup>[2]</sup> This probability decreases with time.
+
+The algorithm is likely to accept "bad" solutions at first. But with time the algorithm is less and less likely to accept "bad" solutions. In the end the algorithm accepts almost only better solutions.
 
 ## Algorithm description
 
@@ -42,7 +44,7 @@ Each step consists of following:
 
 1. Using the new candidate solution if either the new solution is beter (greater total price) than the old one OR if random number between 0 and 1 is greater than `exp( (new_price - old_price) / temperature)`.
 
-After certain amount of steps the temperature is lowered. (equilibrium => cooling) 
+After certain amount of steps the temperature is lowered. (equilibrium => cooling)   
 If no candidate solution is accepted for many steps the algorithm terminates. (frozen)
 
 ## Performance measurements 
@@ -110,6 +112,29 @@ title: 100 runs (better statistical TODO)
 ## Conclusion
 In following section I will evaluate how each parameter affects the running time and relative mistake of chosen algorithms.
 
+PROCESS:
+
+i have generated 10 instances of the problem
+and for each instance and run the algorithm 100 times to reach at least *some* level of statistical significancy
+I have created 10 plots (one for each instance)
+
+then I have adjusted the params and repeated the process 
+
+
+#I have used gnuplot to automatically create plot with all 100 runs for each instance
+#this way I have ended up with 10 plots to compare and observe
+
+
+i have tried stuff
+
+neighbour creation is important - we want continuous state space
+changed from one bit flip to N bit flips
+
+capacity limitation could be handled differently
+
+equilibrium could be handled differently
+
+different settings can lead to similar results
 
 
 
