@@ -33,19 +33,22 @@ The algorithm is basically hill-climbing except instead of picking the best move
 
 ### Simulated annealing
 
-basic flow chart
+Algorithm consists of predefined number of individual steps.
+In each step consists of following:
 
-explain individual shits:
+1. We get a new candidate solution by inverting N bits from current solution
 
-- try_state
-- Equlibrioum 
-- Cooling
-- Frozen
+1. We check if the new candidate solution total weight is not greater than capacity.
 
+1. We use the new candidate solution if either new solution is beter (greater total price) than the old one OR if random number between 0 and 1 is greater than `exp( (new_price - old_price) / temperature)`.
+
+After certain amount of steps the temperature is lowered.  
+If no new candidate solution is used for many steps the algorithm terminates.
 
 ## Performance measurements 
 
-I have used knapgen
+I have used supplied problem instance generator.
+I have used two different parametrizations.
 
 ### Random generator parameter values
 - **Problem size: 40** 
@@ -58,7 +61,7 @@ I have used knapgen
 - Max steps: 4000
 - Starting temperature: 200
 - Frozen constant: 50 (algorithm terminates after **50** steps without new state) 
-- Equlibrioum constant: 50 (cooling is performed every **50** steps)
+- Equlibrium constant: 50 (cooling is performed every **50** steps)
 - Cooling koeficient: 0.95
 - Neighbour constant: 10 (each neighbour has between 1 and *item_count* / **10** flipped bits)
 
@@ -83,7 +86,7 @@ title: 100 runs (better statistical TODO)
 - Max steps: 6000
 - Starting temperature: 60
 - Frozen constant: 50 (algorithm terminates after **50** steps without new state) 
-- Equlibrioum constant: 50 (cooling is performed every **50** steps)
+- Equlibrium constant: 50 (cooling is performed every **50** steps)
 - Cooling koeficient: 0.99
 - Neighbour constant: 20 (each neighbour has between 1 and *item_count* / **20** flipped bits)
 

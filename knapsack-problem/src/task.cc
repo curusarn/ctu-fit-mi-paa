@@ -295,18 +295,6 @@ int Task::solve_fptas(double epsilon) {
 
 // simulated annealing
 
-bool _frozen() {
-    return false;
-}
-
-bool _equlibrium() {
-    return true;
-}
-
-double _cool(double temp, double cooling_koef) {
-    return temp * cooling_koef;
-}
-
 bool _use_new_solution(int old_price, int new_price, double temp, double rand) {
     if (new_price > old_price)
         return true;
@@ -346,7 +334,7 @@ int Task::solve_annealing(int max_steps, double starting_temp,
         }
         
         if (steps_since_cooling > equlibrium_const) {
-            temp = _cool(temp, cooling_koef);
+            temp *= cooling_koef;
             steps_since_cooling = 0;
         }
         
