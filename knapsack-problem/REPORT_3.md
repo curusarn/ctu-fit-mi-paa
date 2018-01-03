@@ -69,7 +69,7 @@ I have used two different parametrizations for the instance generator.
 - Neighbour constant: 10 (each neighbour has between 1 and *item_count* / **10** flipped bits)
 
 **Average relative mistake: 0.5%**
-Average CPU time: 0.005 s
+Average CPU time: 0.0034 s
 
 ##### Plot of 10 runs (for better overview of price development)
 
@@ -95,7 +95,7 @@ Average CPU time: 0.005 s
 - Neighbour constant: 20 (each neighbour has between 1 and *item_count* / **20** flipped bits)
 
 **Average relative mistake: 2%**
-Average CPU time: 0.005 s
+Average CPU time: 0.0054 s
 
 ##### Plot of 10 runs (for better overview of price development)
 
@@ -122,10 +122,12 @@ Using obtained data I have created 10 plots (one for each instance).
 
 After that I have adjusted the algorithm parameters and repeated the process.
 
+
 ### Measurements evaluation
 
 I have tuned the algorithm parameters to minimize the relative mistake of the algorithm.
 The plots of price development contain both intensification and diversification.
+
 
 ### Neighbour creation
 
@@ -133,50 +135,6 @@ At first I have created neighbour solutions by flipping only one bit. Neighbouri
 
 
 I have changed the neighbour creation to flipping N bits. This meant that neighbour could have some items added and some removed which have led to smaller difference in price. Another thing worth mentioning is that this way each solution has more neighbours. Which should help to reduce the likelihood of getting stuck in an suboptimal state.
-
-### Capacity 
-
-capacity limitation could be handled differently
-
-equilibrium could be handled differently
-
-different settings can lead to similar results
-
-
-
-###  
-Changing the *maximal weight* does not affect the running time of selected algorithms.
-
-### Maximal price
-Running time of **dynamic programming** solution (decomposition by price) is directly dependant on *maximal price*.   
-In dynamic programming solution we need to solve table of all sub problems. The size of the table is equal to `number_of_items * total_price` which is directly dependant on *maximal price*.
-
-### Capacity to total weight ratio 
-#### CPU time
-Random instance generation process:
-1.  Instance is generated
-1.  Capacity is calcualted based on:
-    - *Capacity to total weight ratio* parameter
-    - Total weight of generated instance
-
-This means that we can assume that instances with different *capacity to total weight ratio* generally differ in capacity. 
-
-
-**Dynamic programming** solution runs slower for instances with higer capacity.  
-In my implementation of dynamic programming solution the algorithm stops when it's clear that every new solution would have weigth higher capacity.
-
-
-**Branch and bound** dependance on *capacity to total weight ratio* is a bit more interesting. 
-1. Running time raises with capacity. Branches are cut when their weight is greater than capacity. Higher capacity reduces the amount of cuts significantly.  
-1. Running time is significantly lower for instances with capacities close to or higher than total price. Solutions for such instances contain (almost) all items. In my implementation of branch and bound the solutions containing (almost) all items are explored first and therefore found quickly.
-
-#### Relative mistake
-**Heuristic solution** has higher relative mistake for instances with low capacity to total weigth ratio.  
-Lower ratio means that less items can fit into the bag which leads to higer chance of choosing sub-optimal item.
-
-### Granularity
-**Branch and bound** solution takes slightly more time for instances with more bigger items than for instances with more smaller items. The difference is noticable for granularity exponent higher than one.
-
 
 
 ## Source code
