@@ -68,7 +68,7 @@ I have used two different parametrizations for the instance generator.
 - Cooling koeficient: 0.95
 - Neighbour constant: 10 (each neighbour has between 1 and *item_count* / **10** flipped bits)
 
-**Average relative mistake: 0.5%**
+**Average relative mistake: 0.5%**  
 Average CPU time: 0.0034 s
 
 ##### Plot of 10 runs (for better overview of price development)
@@ -94,7 +94,7 @@ Average CPU time: 0.0034 s
 - Cooling koeficient: 0.99
 - Neighbour constant: 20 (each neighbour has between 1 and *item_count* / **20** flipped bits)
 
-**Average relative mistake: 2%**
+**Average relative mistake: 2%**  
 Average CPU time: 0.0054 s
 
 ##### Plot of 10 runs (for better overview of price development)
