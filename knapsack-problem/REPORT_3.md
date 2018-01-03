@@ -52,6 +52,7 @@ If no candidate solution is accepted for many steps the algorithm terminates. (f
 I have used supplied problem instance generator.
 I have used two different parametrizations for the instance generator.
 
+
 ### Random generator parameter values
 - **Problem size: 40** 
 - Max weight: 100
@@ -68,12 +69,13 @@ I have used two different parametrizations for the instance generator.
 - Neighbour constant: 10 (each neighbour has between 1 and *item_count* / **10** flipped bits)
 
 **Average relative mistake: 0.5%**
+Average CPU time: 0.005 s
 
-title: 10 runs (better visibility of individual runs)
+##### Plot of 10 runs (for better overview of price development)
 
 ![Simulated annealing](plots/annealing_plot_40items_10runs.png)
 
-title: 100 runs (better statistical TODO)
+##### Plot of 100 runs (more statistically significant)
 
 ![Simulated annealing](plots/annealing_plot_40items_100runs.png)
 
@@ -93,14 +95,13 @@ title: 100 runs (better statistical TODO)
 - Neighbour constant: 20 (each neighbour has between 1 and *item_count* / **20** flipped bits)
 
 **Average relative mistake: 2%**
+Average CPU time: 0.005 s
 
-
-title: 10 runs (better visibility of individual runs)
-
+##### Plot of 10 runs (for better overview of price development)
 
 ![Simulated annealing](plots/annealing_plot_100items_10runs.png)
 
-title: 100 runs (better statistical TODO)
+##### Plot of 100 runs (more statistically significant)
 
 ![Simulated annealing](plots/annealing_plot_100items_100runs.png)
 
@@ -110,25 +111,30 @@ title: 100 runs (better statistical TODO)
 *Measured using Intel Pentium G4560*
 
 ## Conclusion
-In following section I will evaluate how each parameter affects the running time and relative mistake of chosen algorithms.
+In following section I will describe the parameter tunning process. I will evaluate the results and I will pinpoint some observations I have made.
 
-PROCESS:
+### Parameter tunning process
 
-i have generated 10 instances of the problem
-and for each instance and run the algorithm 100 times to reach at least *some* level of statistical significancy
-I have created 10 plots (one for each instance)
-
-then I have adjusted the params and repeated the process 
+I have generated 10 instances of the problem.
+Then for each instance I have run the algorithm 100 times to reach at least *some* level of statistical significancy.
+Using obtained data I have created 10 plots (one for each instance).
 
 
-#I have used gnuplot to automatically create plot with all 100 runs for each instance
-#this way I have ended up with 10 plots to compare and observe
+After that I have adjusted the algorithm parameters and repeated the process.
+
+### Measurements evaluation
+
+I have tuned the algorithm parameters to minimize the relative mistake of the algorithm.
+The plots of price development contain both intensification and diversification.
+
+### Neighbour creation
+
+At first I have created neighbour solutions by flipping only one bit. Neighbouring solutions had a very big difference in price (one added or removed item). Because of that there were many local maxima and the algorithm was more likely to get stuck in one. This have led to marginally worse solutions (about 10 times worse). 
 
 
-i have tried stuff
+I have changed the neighbour creation to flipping N bits. This meant that neighbour could have some items added and some removed which have led to smaller difference in price. Another thing worth mentioning is that this way each solution has more neighbours. Which should help to reduce the likelihood of getting stuck in an suboptimal state.
 
-neighbour creation is important - we want continuous state space
-changed from one bit flip to N bit flips
+### Capacity 
 
 capacity limitation could be handled differently
 
