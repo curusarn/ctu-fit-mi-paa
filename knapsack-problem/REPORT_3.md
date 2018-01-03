@@ -107,7 +107,7 @@ Average CPU time: 0.0054 s
 
 
 
-*Relative mistake was calculated in reference to dynamic programming solution.*
+*Relative mistake was calculated in reference to dynamic programming solution.*  
 *Measured using Intel Pentium G4560*
 
 ## Conclusion
@@ -115,9 +115,9 @@ In following section I will describe the parameter tunning process. I will evalu
 
 ### Parameter tunning process
 
-I have generated 10 instances of the problem.
-Then for each instance I have run the algorithm 100 times to reach at least *some* level of statistical significancy.
-Using obtained data I have created 10 plots (one for each instance).
+I have generated 10 instances of the problem.  
+Then for each instance I have run the algorithm 100 times to reach at least *some* level of statistical significancy.  
+Using obtained data I have created 10 plots (one for each instance).  
 
 
 After that I have adjusted the algorithm parameters and repeated the process.
@@ -125,7 +125,7 @@ After that I have adjusted the algorithm parameters and repeated the process.
 
 ### Measurements evaluation
 
-I have tuned the algorithm parameters to minimize the relative mistake of the algorithm.
+I have tuned the algorithm parameters to minimize the relative mistake of the algorithm.  
 The plots of price development contain both intensification and diversification.
 
 
