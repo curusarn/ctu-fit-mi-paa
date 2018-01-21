@@ -10,24 +10,13 @@
 
 #define INF (INT_MAX / 2)
 
-// O*(1)
-uint _get_first_zero_bit(uint64_t bits){
-    uint64_t mask = 1;
-    uint index = 0;;
-    while ((bits & mask) != 0) {
-        mask = (mask<<1);
-        index++;
-    }
-    return index;
-}
-
 int _add_or_delete(uint id, std::vector<bool> & bitset) {
     bitset[id] = !bitset[id]; 
     return (bitset[id]) ? 1 : -1;
 }
 
 
-bool Task::is_sat(const Clause & clause, const std::vector<bool> & bitset) {
+bool _is_sat(const Clause & clause, const std::vector<bool> & bitset) {
     for (auto& var : clause) 
         if (var.first ^ bitset[var.second]) return true;
     return false;
@@ -37,16 +26,16 @@ uint Task::no_sat_clauses(const std::vector<bool> & bitset) {
     uint count = 0;
 
     for (auto& clause : clauses) 
-        if (is_sat(clause, bitset)) count++;
+        if (_is_sat(clause, bitset)) count++;
     return count;
 }
 
-std::pair<int, double> Task::get_theoretical_best(double fitness_koef) {
+int Task::get_theoretical_best(double fitness_koef) {
     int sum_all_weights = 0; // this will be used to count fitness
     for (int w : weights)
         sum_all_weights += w;
     int abs_fitness_koef = int(sum_all_weights * fitness_koef); 
-    return {(clauses.size() * abs_fitness_koef + sum_all_weights), 42.0};
+    return (clauses.size() * abs_fitness_koef + sum_all_weights);
 }
 
 // simulated annealing
@@ -83,13 +72,10 @@ int Task::solve_annealing(int max_steps, double starting_temp,
     for (int w : weights)
         sum_all_weights += w;
     int abs_fitness_koef = int(sum_all_weights * fitness_koef); 
-    std::cerr << "sum of weights * fit koef = " << abs_fitness_koef << std::endl;
 
     uint curr_nsat = no_sat_clauses(curr_bitset); // number of sat clauses
     int curr_wsum = 0; // sum of weights
     int curr_fitness = _fitness(curr_wsum, curr_nsat, abs_fitness_koef);
-    print(curr_bitset);
-    std::cerr << "curr fit = " << curr_fitness << std::endl;
 
     double temp = starting_temp;
 
@@ -133,9 +119,6 @@ int Task::solve_annealing(int max_steps, double starting_temp,
         std::cout << std::endl;
         new_nsat = no_sat_clauses(curr_bitset); 
         new_fitness = _fitness(new_wsum, new_nsat, abs_fitness_koef); 
-        std::cerr << "new nsat = " << new_nsat << std::endl;
-        std::cerr << "new wsum = " << new_wsum << std::endl;
-        std::cerr << "new fit = " << new_fitness << std::endl;
 
         if (new_fitness > curr_fitness) {
             curr_wsum = new_wsum;
@@ -163,13 +146,8 @@ int Task::solve_annealing(int max_steps, double starting_temp,
 
             steps_wo_new_state++;
         }
-        
     }
-    
 
-    //assert(curr_nsat == clauses.size()); // solved sat
-    print(curr_bitset);
-    std::cerr << curr_fitness << std::endl;
     return curr_fitness;
 }
 

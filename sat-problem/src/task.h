@@ -15,17 +15,16 @@ class Task {
     std::vector<int> weights;
     std::vector<Clause> clauses;
 
-    bool is_sat(const Clause & clause, const std::vector<bool> & bitset);
     uint no_sat_clauses(const std::vector<bool> & bitset);
+    void print();
+    void print(const std::vector<bool> & bitset);
 public:
     Task(std::vector<int> && a_weights, std::vector<Clause> && a_clauses) 
             : weights(std::move(a_weights)), clauses(std::move(a_clauses)) {};
     Task(Task && task) : weights(std::move(task.weights)),
                          clauses(std::move(task.clauses)) {};
-    void print();
-    void print(const std::vector<bool> & bitset);
 
-    std::pair<int, double> get_theoretical_best(double fitness_koef);
+    int get_theoretical_best(double fitness_koef);
     int solve_annealing(int max_steps, double starting_temp, int frozen_const,
                         int equlibrium_const, double cooling_koef,
                         int neighbour_const, double fitness_koef);
@@ -56,7 +55,7 @@ std::pair<int, double> Task::time_call(Call call) {
     int number_of_runs = 1;
     while (time < MIN_ALLOWED_TIME) {
         // run call() multiple times and count the average running time
-        //      until you get something larget than MIN_ALLOWED_TIME
+        //      until you get something larger than MIN_ALLOWED_TIME
         number_of_runs *= 16;
         begin = std::clock();
         for(int i = 0; i < number_of_runs; i++)
