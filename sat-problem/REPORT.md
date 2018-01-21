@@ -1,24 +1,24 @@
-# MI-PAA - Knapsack problem
+# MI-PAA - Boolean satisfiability problem
 *Simon Let \<letsimon@fit.cvut.cz\>*
 
 ## Problem specification
-The knapsack problem or rucksack problem is a problem in combinatorial optimization: Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.<sup>[1]</sup>  
+The boolean satisfiability problem is the problem of determining if there exists an interpretation that satisfies a given Boolean formula.  REF ME
+SAT is the first problem that was proven to be NP-complete. REF ME
 
-Exact definition and instructions: https://edux.fit.cvut.cz/courses/MI-PAA/homeworks/04/start
+Weighted SAT is variant of the problem where each variable has a given weight and you maximize sum of weight of variables that are true. FIX ME
+
+
+Exact definition and instructions: https://edux.fit.cvut.cz/courses/MI-PAA/homeworks/05/start
 
 ## Possible solutions
 - Bruteforce
-- Heuristic solution
-- Branch & bound
-- Dynamic programming
-- Fully polynomial time approximation scheme (FPTAS)
 - Simulated annealing
 - Genetic algorithm
 - Tabu search
 
 
 ## Solution overview
-In this report, I will describe how I used **simulated annealing** to solve **knapsack problem**.
+In this report, I will describe how I used **simulated annealing** to solve the **SAT problem**.
 
 
 ### Simulated annealing
@@ -34,6 +34,7 @@ The algorithm is likely to accept "bad" solutions at first. But with time the al
 ## Algorithm description
 
 ### Simulated annealing
+
 
 The algorithm consists of a predefined number of individual steps.  
 Each step consists of following:
