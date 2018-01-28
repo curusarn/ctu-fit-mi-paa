@@ -15,7 +15,7 @@ void RecordCollector::add_record(int ref_price,
                                  const std::pair<int,double> & record) {
     count += 1;
    
-    int price = record.first;
+    long int price = record.first;
     double t = record.second;
     double m = relative_miss(ref_price, price);
     time += t;

@@ -11,7 +11,7 @@ class RecordCollector {
     double max_miss = 0;
     double max_time = 0;
 
-    int count = 0;
+    long int count = 0;
     
     static double relative_miss(double optimal, double approx);
 
