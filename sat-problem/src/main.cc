@@ -9,8 +9,8 @@
 #include "record_collector.h" 
 
 #define uint unsigned int
-#define VAR_COUNT 5000
-#define CLAUSE_COUNT 8000
+#define VAR_COUNT 3999 
+#define CLAUSE_COUNT 9999 
 
 #define MIN_VAR_COUNT 5
 #define MAX_VAR_COUNT 5000

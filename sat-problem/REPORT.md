@@ -123,65 +123,98 @@ Because of low temperature the algorihm is unlikely to accept worse solutions an
 If the intensification phase is ended prematurely it is likely that algorithm did not find the local maxima and there is a better solution somewhere close in the state-space.
 
 
-### 
-
 ## Performance measurements 
 
+I have used many different parametrizations for the instance generator.
 
-I have used two different parametrizations for the instance generator.
+**Generator parameter values**
+Variable count: 5 - 5000
+Clause count: 10 - 10000
+
+I have found parameter settings that gives consistent results for all generated instances. 
+
+**Simulated annealing parameter values**
+Parameter values depend on variable count (`var_cnt`) and clausule count (`cl_cnt`). 
+- Max steps: 10000
+- Starting temperature: `(var_cnt * cl_cnt / 10) + 20000`
+- Frozen constant: `0.4 * var_cnt`
+- Equilibrium constant: `10`
+- Cooling koeficient: `0.965`
+- Neighbour constant: `log(var_cnt)^1.3`
+- Fitness koeficient: `1000 * var_cnt / cl_cnt` 
+
+I have measured average mistake relative to **theoretical best possible solution**.
+I calculated it as a sum of all weights and number of clauses multiplied by coeficient.
+Each plot includes a cyan line that represents theoretical best possible value. 
 
 
-### Random generator parameter values
-- **Problem size: 40** 
-- Max weight: 100
-- Max Price: 40 
-- Capacity to total price ratio: 0.65
-- Granularity: 0
+### Setting #1
 
-#### Simulated annealing parameter values
-- Max steps: 4000
-- Starting temperature: 200
-- Frozen constant: 50 (algorithm terminates after **50** steps without new state) 
-- Equilibrium constant: 50 (cooling is performed every **50** steps)
-- Cooling koeficient: 0.95
-- Neighbour constant: 10 (each neighbour has between 1 and *item_count* / **10** flipped bits)
+Varible count: 99
+Clause count: 99
 
-**Average relative mistake: 0.5%**  
-Average CPU time: 0.0034 s
+**Average relative mistake: 0.1%**  
+Average CPU time: 0.01 s
 
-##### Plot of 10 runs (for better overview of price development)
+#### Plots of 10 runs  
+![Simulated annealing](plots/plot_99vars_99clauses_.png)
+![Simulated annealing](plots/plot_99vars_99clauses_Wsum.png)
+![Simulated annealing](plots/plot_99vars_99clauses_Nsat.png)
 
-![Simulated annealing](plots/annealing_plot_40items_10runs.png)
+#### Plot of 100 runs (more statisticaly significant)
+![Simulated annealing](plots/plot_99vars_99clauses_100runs.png)
 
-##### Plot of 100 runs (more statistically significant)
 
-![Simulated annealing](plots/annealing_plot_40items_100runs.png)
+### Setting #2
 
-### Random generator parameter values
-- **Problem size: 100** 
-- Max weight: 100
-- Max Price: 40 
-- Capacity to total price ratio: 0.65
-- Granularity: 0
+Varible count: 99
+Clause count: 399
 
-#### Simulated annealing parameter values
-- Max steps: 6000
-- Starting temperature: 60
-- Frozen constant: 50 (algorithm terminates after **50** steps without new state) 
-- Equilibrium constant: 50 (cooling is performed every **50** steps)
-- Cooling koeficient: 0.99
-- Neighbour constant: 20 (each neighbour has between 1 and *item_count* / **20** flipped bits)
+**Average relative mistake: 1.4%**  
+Average CPU time: 0.015 s
 
-**Average relative mistake: 2%**  
-Average CPU time: 0.0054 s
+#### Plots of 10 runs  
+![Simulated annealing](plots/plot_99vars_399clauses_.png)
+![Simulated annealing](plots/plot_99vars_399clauses_Wsum.png)
+![Simulated annealing](plots/plot_99vars_399clauses_Nsat.png)
 
-##### Plot of 10 runs (for better overview of price development)
+#### Plot of 100 runs (more statisticaly significant)
+![Simulated annealing](plots/plot_99vars_399clauses_100runs.png)
 
-![Simulated annealing](plots/annealing_plot_100items_10runs.png)
 
-##### Plot of 100 runs (more statistically significant)
+### Setting #3
 
-![Simulated annealing](plots/annealing_plot_100items_100runs.png)
+Varible count: 999
+Clause count: 399
+
+**Average relative mistake: 0.02%**  
+Average CPU time: 0.032 s
+
+#### Plots of 10 runs  
+![Simulated annealing](plots/plot_999vars_399clauses_.png)
+![Simulated annealing](plots/plot_999vars_399clauses_Wsum.png)
+![Simulated annealing](plots/plot_999vars_399clauses_Nsat.png)
+
+#### Plot of 100 runs (more statisticaly significant)
+![Simulated annealing](plots/plot_999vars_399clauses_100runs.png)
+
+
+### Setting #4
+
+Varible count: 3999
+Clause count: 9999
+
+**Average relative mistake: 0.02%**  
+Average CPU time: 0.032 s
+
+#### Plots of 10 runs  
+![Simulated annealing](plots/plot_999vars_399clauses_.png)
+![Simulated annealing](plots/plot_999vars_399clauses_Wsum.png)
+![Simulated annealing](plots/plot_999vars_399clauses_Nsat.png)
+
+#### Plot of 100 runs (more statisticaly significant)
+![Simulated annealing](plots/plot_999vars_399clauses_100runs.png)
+
 
 
 
