@@ -8,7 +8,7 @@
 #include <cmath>
 #include "task.h"
 
-#define INF (INT_MAX / 2)
+#define REF_FITNESS_KOEF 1
 
 int _add_or_delete(uint id, std::vector<bool> & bitset) {
     bitset[id] = !bitset[id]; 
@@ -34,8 +34,8 @@ int Task::get_theoretical_best(double fitness_koef) {
     int sum_all_weights = 0; // this will be used to count fitness
     for (int w : weights)
         sum_all_weights += w;
-    int abs_fitness_koef = int(sum_all_weights * fitness_koef); 
-    return (clauses.size() * abs_fitness_koef + sum_all_weights);
+    int ref_fitness_koef = int(sum_all_weights * REF_FITNESS_KOEF); 
+    return (clauses.size() * ref_fitness_koef + sum_all_weights);
 }
 
 // simulated annealing
@@ -62,7 +62,7 @@ int Task::solve_annealing(int max_steps, double starting_temp,
     std::uniform_real_distribution<> rand_prob(0, 1.0);
     std::uniform_int_distribution<> rand_var(0, weights.size() - 1);
     std::uniform_int_distribution<> 
-                            rand_bit_cnt(0, weights.size() / neighbour_const);
+                            rand_bit_cnt(0, neighbour_const);
 
     std::vector<bool> curr_bitset(weights.size(), false); 
     // maybe start with all true?
@@ -71,7 +71,8 @@ int Task::solve_annealing(int max_steps, double starting_temp,
     int sum_all_weights = 0; // this will be used to count fitness
     for (int w : weights)
         sum_all_weights += w;
-    int abs_fitness_koef = int(sum_all_weights * fitness_koef); 
+    //int abs_fitness_koef = int(sum_all_weights * fitness_koef); 
+    int abs_fitness_koef = int(fitness_koef); 
 
     uint curr_nsat = no_sat_clauses(curr_bitset); // number of sat clauses
     int curr_wsum = 0; // sum of weights
@@ -148,7 +149,8 @@ int Task::solve_annealing(int max_steps, double starting_temp,
         }
     }
 
-    return curr_fitness;
+    int ref_fitness_koef = int(sum_all_weights * REF_FITNESS_KOEF); 
+    return ref_fitness_koef * curr_nsat + curr_wsum;
 }
 
 void Task::print() {

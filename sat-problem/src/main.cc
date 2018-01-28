@@ -1,4 +1,5 @@
 
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include <cassert>
@@ -11,17 +12,17 @@
 #define VAR_COUNT 1000
 #define CLAUSE_COUNT 400
 
-#define REPEAT 1
+#define REPEAT 10
 
 // simulated annealing
 // max_steps, starting_temp, frozen_const, equlibrium_const, cooling_koef
-#define SA_MAX_STEPS 100000 
-#define SA_START_TEMP 200 
-#define SA_FROZEN_CONST 600
+#define SA_MAX_STEPS 10000 
+#define SA_START_TEMP VAR_COUNT * CLAUSE_COUNT / 10
+#define SA_FROZEN_CONST 300
 #define SA_EQULIBRIUM_CONST 10 
-#define SA_COOLING_KOEF 0.995
-#define SA_NEIGHBOUR_CONST 10 
-#define SA_FITNESS_KOEF 0.01 
+#define SA_COOLING_KOEF 0.95
+#define SA_NEIGHBOUR_CONST  std::pow(std::log(VAR_COUNT), 1.3)
+#define SA_FITNESS_KOEF 700
 
 
 // SAT problem generator
@@ -53,6 +54,8 @@ int main(){
 
     std::cout << "PARAMETER (miss time max_miss max_time)"
               << " bruteforce annealing"
+              << std::endl;
+    std::cerr << " ngh_const = " << SA_NEIGHBOUR_CONST 
               << std::endl;
 
 
