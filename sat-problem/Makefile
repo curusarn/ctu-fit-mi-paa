@@ -19,18 +19,16 @@ _run:
 	gnuplot -c src/plots.gp
 	feh /tmp/sat_plot.png &
 
+report:
+	grip REPORT.md localhost:6420 --title="MI-PAA - SAT problem"
 
 pdf:
-	grip REPORT_3_br.md localhost:6420 --title="MI-PAA - Knapsack problem" &
+	grip REPORT_br.md localhost:6420 --title="MI-PAA - SAT problem" &
 	sleep 5 
 	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-3_knap.pdf
 	pkill grip
 
-pdf_knapgen: plot_knapgen 
-	grip REPORT_br.md localhost:6420 --title="MI-PAA - Knapsack problem" &
-	sleep 5 
-	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-2_knap.pdf
-	pkill grip
+pdf_knapgen: plot_knapgen pdf
 
 tar:
 	tar -zcvf letsimon-fit-cvut-mi-paa-sat.tar.gz src/* Makefile

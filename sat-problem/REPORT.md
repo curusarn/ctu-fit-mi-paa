@@ -63,28 +63,22 @@ But it can't be so great that all non-satisfying solutions are omitted immediate
 
 ### Algorithm parameters
 
-`max_steps`  
-Maximal number of steps the algorithm will perform.
+- `max_steps`: Maximal number of steps the algorithm will perform.
 
 
-`starting_temperature`
-Temperature is initalized to this value.
+- `starting_temperature`: Temperature is initalized to this value.
 
 
-`frozen_constant`
-Algorithm ends if no new state was accepted for `frozen_constant` of steps.
+- `frozen_constant`: Algorithm ends if no new state was accepted for `frozen_constant` of steps.
 
 
-`cooling_coeficient` and `equlibrium_constant`
-Temperature is multiplied by `cooling_coeficient` (number < 1) every `equlibrium_constant` steps.
+- `cooling_coeficient` and `equlibrium_constant`: Temperature is multiplied by `cooling_coeficient` (number < 1) every `equlibrium_constant` steps.
 
 
-`neighbour_constant`
-Neighbour is constructed by flipping `total_bit_count / neighbour_constant` bits.
+- `neighbour_constant`: Neighbour is constructed by flipping `total_bit_count / neighbour_constant` bits.
 
 
-`fitness_coeficient`
-Ceoficient used to balance the penalisation applied to non-satisfying solutions. (See paragraph above)
+- `fitness_coeficient`: Ceoficient used to balance the penalisation applied to non-satisfying solutions. (See paragraph above)
 
 
 ## 3-SAT problem instance generator
@@ -106,18 +100,18 @@ It is curcial to understand these phases and their purpose to esimate and tune t
 
 ### Diversification 
 
-Simulated annealing algorithm starts in diversification phase.
-The goal of diversification phase is to explore huge portion of the state-space.
-During diversification phase the temperature is high, because of that agorithm does not get stuck in local maxima and accepts worse solutions quite frequently.
+Simulated annealing algorithm starts in diversification phase.  
+The goal of diversification phase is to explore huge portion of the state-space.  
+During diversification phase the temperature is high, because of that agorithm does not get stuck in local maxima and accepts worse solutions quite frequently.  
 
 
 If the diversification phase is ended prematurely it is likely that algorithm gets stuck in local maxima and there is much better solution somewhere far away in the state-space.
 
 ### Intensification 
 
-Due to continuously lowering temperature the algorithm enters intensification phase.
-The goal of intensification phase is to intensively explore smaller portion of the state-space and find the local maxima.
-Because of low temperature the algorihm is unlikely to accept worse solutions and explores many of it's imidiate neighbours.
+Due to continuously lowering temperature the algorithm enters intensification phase.  
+The goal of intensification phase is to intensively explore smaller portion of the state-space and find the local maxima.  
+Because of low temperature the algorihm is unlikely to accept worse solutions and explores many of it's imidiate neighbours.  
 
 
 If the intensification phase is ended prematurely it is likely that algorithm did not find the local maxima and there is a better solution somewhere close in the state-space.
@@ -128,8 +122,8 @@ If the intensification phase is ended prematurely it is likely that algorithm di
 I have used many different parametrizations for the instance generator.
 
 **Generator parameter values**
-Variable count: 5 - 5000
-Clause count: 10 - 10000
+- Variable count: 5 - 5000
+- Clause count: 10 - 10000
 
 I have found parameter settings that gives consistent results for all generated instances. 
 
@@ -137,7 +131,7 @@ I have found parameter settings that gives consistent results for all generated 
 Parameter values depend on variable count (`var_cnt`) and clausule count (`cl_cnt`). 
 - Max steps: 10000
 - Starting temperature: `(var_cnt * cl_cnt / 10) + 20000`
-- Frozen constant: `0.4 * var_cnt`
+- Frozen constant: `0.4 * var_cnt + 100` 
 - Equilibrium constant: `10`
 - Cooling koeficient: `0.965`
 - Neighbour constant: `log(var_cnt)^1.3`
@@ -150,71 +144,87 @@ Each plot includes a cyan line that represents theoretical best possible value.
 
 ### Setting #1
 
-Varible count: 99
-Clause count: 99
+- Varible count: 99  
+- Clause count: 99  
 
-**Average relative mistake: 0.1%**  
-Average CPU time: 0.01 s
+- **Average relative mistake: 0.1%**  
+- Average CPU time: 0.01 s
 
 #### Plots of 10 runs  
-![Simulated annealing](plots/plot_99vars_99clauses_.png)
-![Simulated annealing](plots/plot_99vars_99clauses_Wsum.png)
-![Simulated annealing](plots/plot_99vars_99clauses_Nsat.png)
+![Simulated annealing](plots/plot_vars99_clauses99_.png)
+![Simulated annealing](plots/plot_vars99_clauses99_Wsum.png)
+![Simulated annealing](plots/plot_vars99_clauses99_Nsat.png)
 
 #### Plot of 100 runs (more statisticaly significant)
-![Simulated annealing](plots/plot_99vars_99clauses_100runs.png)
+![Simulated annealing](plots/plot_vars99_clauses99_100runs.png)
 
 
 ### Setting #2
 
-Varible count: 99
-Clause count: 399
+- Varible count: 99  
+- Clause count: 399  
 
-**Average relative mistake: 1.4%**  
-Average CPU time: 0.015 s
+- **Average relative mistake: 0.9%**  
+- Average CPU time: 0.015 s
 
 #### Plots of 10 runs  
-![Simulated annealing](plots/plot_99vars_399clauses_.png)
-![Simulated annealing](plots/plot_99vars_399clauses_Wsum.png)
-![Simulated annealing](plots/plot_99vars_399clauses_Nsat.png)
+![Simulated annealing](plots/plot_vars99_clauses399_.png)
+![Simulated annealing](plots/plot_vars99_clauses399_Wsum.png)
+![Simulated annealing](plots/plot_vars99_clauses399_Nsat.png)
 
 #### Plot of 100 runs (more statisticaly significant)
-![Simulated annealing](plots/plot_99vars_399clauses_100runs.png)
+![Simulated annealing](plots/plot_vars99_clauses399_100runs.png)
 
 
 ### Setting #3
 
-Varible count: 999
-Clause count: 399
+- Varible count: 999  
+- Clause count: 399  
 
-**Average relative mistake: 0.02%**  
-Average CPU time: 0.032 s
+- **Average relative mistake: 0.02%**  
+- Average CPU time: 0.032 s
 
 #### Plots of 10 runs  
-![Simulated annealing](plots/plot_999vars_399clauses_.png)
-![Simulated annealing](plots/plot_999vars_399clauses_Wsum.png)
-![Simulated annealing](plots/plot_999vars_399clauses_Nsat.png)
+![Simulated annealing](plots/plot_vars999_clauses399_.png)
+![Simulated annealing](plots/plot_vars999_clauses399_Wsum.png)
+![Simulated annealing](plots/plot_vars999_clauses399_Nsat.png)
 
 #### Plot of 100 runs (more statisticaly significant)
-![Simulated annealing](plots/plot_999vars_399clauses_100runs.png)
+![Simulated annealing](plots/plot_vars999_clauses399_100runs.png)
 
 
 ### Setting #4
 
-Varible count: 3999
-Clause count: 9999
+- Varible count: 21 
+- Clause count: 91
 
-**Average relative mistake: 0.02%**  
-Average CPU time: 0.032 s
+- **Average relative mistake: 0.5%**  
+- Average CPU time: 0.027 s
 
 #### Plots of 10 runs  
-![Simulated annealing](plots/plot_999vars_399clauses_.png)
-![Simulated annealing](plots/plot_999vars_399clauses_Wsum.png)
-![Simulated annealing](plots/plot_999vars_399clauses_Nsat.png)
+![Simulated annealing](plots/plot_vars21_clauses91_.png)
+![Simulated annealing](plots/plot_vars21_clauses91_Wsum.png)
+![Simulated annealing](plots/plot_vars21_clauses91_Nsat.png)
 
 #### Plot of 100 runs (more statisticaly significant)
-![Simulated annealing](plots/plot_999vars_399clauses_100runs.png)
+![Simulated annealing](plots/plot_vars21_clauses91_100runs.png)
 
+
+### Setting #5
+
+- Varible count: 250 
+- Clause count: 1065 
+
+- **Average relative mistake: 1.7%**  
+- Average CPU time: 0.082 s
+
+#### Plots of 10 runs  
+![Simulated annealing](plots/plot_vars250_clauses1065_.png)
+![Simulated annealing](plots/plot_vars250_clauses1065_Wsum.png)
+![Simulated annealing](plots/plot_vars250_clauses1065_Nsat.png)
+
+#### Plot of 100 runs (more statisticaly significant)
+![Simulated annealing](plots/plot_vars250_clauses1065_100runs.png)
 
 
 
