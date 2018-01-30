@@ -9,22 +9,23 @@
 #include "record_collector.h" 
 
 #define uint unsigned int
-#define VAR_COUNT 3999 
-#define CLAUSE_COUNT 9999 
+#define VAR_COUNT 250
+#define CLAUSE_COUNT 1065 
 
 #define MIN_VAR_COUNT 5
-#define MAX_VAR_COUNT 5000
+#define MAX_VAR_COUNT 1000
 
-#define REPEAT 10
+#define REPEAT 100
+#define INSTANCES 100
 
 // simulated annealing
 // max_steps, starting_temp, frozen_const, equlibrium_const, cooling_koef
 #define SA_MAX_STEPS 10000 
 #define SA_START_TEMP VAR_COUNT * CLAUSE_COUNT / 10 + 20000
-#define SA_FROZEN_CONST 0.4 * VAR_COUNT
+#define SA_FROZEN_CONST 0.4 * VAR_COUNT + 100
 #define SA_EQULIBRIUM_CONST 10 
 #define SA_COOLING_KOEF 0.965
-#define SA_NEIGHBOUR_CONST std::pow(std::log(VAR_COUNT), 1.3) 
+#define SA_NEIGHBOUR_CONST std::pow(std::log(VAR_COUNT), 1.3) + 4
 //+ 0.1 * std::pow(std::log(VAR_COUNT), 1.8)
 #define SA_FITNESS_KOEF 1000 * VAR_COUNT / CLAUSE_COUNT 
 
