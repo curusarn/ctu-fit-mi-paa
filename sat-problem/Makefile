@@ -14,6 +14,9 @@ run: compile _run
 run_debug: compile 
 	${command}
 
+run_noplot: compile 
+	${command} > /dev/null
+
 _run:
 	${command} > /tmp/sat.txt
 	gnuplot -c src/plots.gp
