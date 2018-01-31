@@ -169,7 +169,6 @@ Each plot includes a cyan line that represents the theoretically best possible v
 <br>
 <br>
 <br>
-<br>
 
 ### Setting #1
 
