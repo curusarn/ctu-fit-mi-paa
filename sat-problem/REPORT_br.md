@@ -44,6 +44,10 @@ Each step consists of following:
 
 1. Using the new candidate solution if either the new solution is better (greater fitness) than the old one OR if a random number between 0 and 1 is greater than `exp( (new_fitness - old_fitness) / temperature)`.
 
+<br>
+<br>
+<br>
+<br>
 
 After a certain amount of steps, the temperature is lowered. (equilibrium => cooling)   
 If no candidate solution is accepted for many steps the algorithm terminates. (frozen)
@@ -83,6 +87,26 @@ Clauses are generated iteratively. A variable is randomly picked three times and
 Same variables can repeat within a single clause. 
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ## Performance measurements 
 
@@ -122,6 +146,30 @@ I have measured average mistake relative to a **theoretical best possible soluti
 I calculated it as a sum of all weights and number of clauses multiplied by coefficient.
 Each plot includes a cyan line that represents the theoretical best possible value. 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Setting #1
 
@@ -139,6 +187,12 @@ Each plot includes a cyan line that represents the theoretical best possible val
 #### Plot of 100 runs (more statisticaly significant)
 ![Simulated annealing](plots/plot_vars99_clauses99_100runs.png)
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Setting #2
 
@@ -156,6 +210,12 @@ Each plot includes a cyan line that represents the theoretical best possible val
 #### Plot of 100 runs (more statisticaly significant)
 ![Simulated annealing](plots/plot_vars99_clauses399_100runs.png)
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Setting #3
 
@@ -173,6 +233,12 @@ Each plot includes a cyan line that represents the theoretical best possible val
 #### Plot of 100 runs (more statisticaly significant)
 ![Simulated annealing](plots/plot_vars999_clauses399_100runs.png)
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Setting #4
 
@@ -190,6 +256,12 @@ Each plot includes a cyan line that represents the theoretical best possible val
 #### Plot of 100 runs (more statisticaly significant)
 ![Simulated annealing](plots/plot_vars21_clauses91_100runs.png)
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Setting #5
 
@@ -207,6 +279,14 @@ Each plot includes a cyan line that represents the theoretical best possible val
 #### Plot of 100 runs (more statisticaly significant)
 ![Simulated annealing](plots/plot_vars250_clauses1065_100runs.png)
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Randomized settings
 
@@ -260,6 +340,15 @@ If the intensification phase is ended prematurely it is likely that algorithm di
 
 I will describe these steps in a little more detail in following sections.
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 #### Starting parameters
 
@@ -311,6 +400,8 @@ Which is understandable because generator is likely to generate unsatisfiable SA
 
 The measurements prove that the algorithm and the parametrization works resonably for a rather large class of instances.
 
+<br>
+<br>
 
 ## Source code
 https://gitlab.fit.cvut.cz/letsimon/fit-ctu-mi-ppa/tree/v5.0/sat-problem

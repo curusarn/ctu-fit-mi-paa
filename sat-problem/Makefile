@@ -28,7 +28,7 @@ report:
 pdf:
 	grip REPORT_br.md localhost:6420 --title="MI-PAA - SAT problem" &
 	sleep 5 
-	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-3_knap.pdf
+	wkhtmltopdf http://localhost:6420 letsimon-fit-cvut-mi-paa-sat.pdf
 	pkill grip
 
 pdf_knapgen: plot_knapgen pdf
