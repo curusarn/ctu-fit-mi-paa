@@ -30,7 +30,7 @@ uint Task::no_sat_clauses(const std::vector<bool> & bitset) {
     return count;
 }
 
-int Task::get_theoretical_best(double fitness_koef) {
+int Task::get_theoretical_best() {
     int sum_all_weights = 0; // this will be used to count fitness
     for (int w : weights)
         sum_all_weights += w;

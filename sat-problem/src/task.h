@@ -24,7 +24,7 @@ public:
     Task(Task && task) : weights(std::move(task.weights)),
                          clauses(std::move(task.clauses)) {};
 
-    int get_theoretical_best(double fitness_koef);
+    int get_theoretical_best();
     int solve_annealing(int max_steps, double starting_temp, int frozen_const,
                         int equlibrium_const, double cooling_koef,
                         int neighbour_const, double fitness_koef);

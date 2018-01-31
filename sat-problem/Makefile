@@ -3,6 +3,7 @@ SHELL=/bin/bash
 files=src/main.cc src/task.cc src/record_collector.cc
 command=./main.out
 
+run: compile _run
 
 compile:
 	g++ -std=c++11 -g -pedantic -Wall -Wextra -O2 -o main.out ${files}
@@ -10,7 +11,6 @@ compile:
 run10: compile
 	for i in {1..10}; do make _run; done
 
-run: compile _run
 run_debug: compile 
 	${command}
 
@@ -20,7 +20,7 @@ run_noplot: compile
 _run:
 	${command} > /tmp/sat.txt
 	gnuplot -c src/plots.gp
-	feh /tmp/sat_plot.png &
+	feh /tmp/sat_plot_fitness.png &
 
 report:
 	grip REPORT.md localhost:6420 --title="MI-PAA - SAT problem"
